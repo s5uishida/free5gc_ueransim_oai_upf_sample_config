@@ -50,9 +50,9 @@ The built simulation environment is as follows.
 <img src="./images/network-overview.png" title="./images/network-overview.png" width=1000px></img>
 
 The 5GC / eBPF/XDP UPF / UE / RAN used are as follows.
-- 5GC - free5GC v4.2.0 (2026.01.14) - https://github.com/free5gc/free5gc
-- eBPF/XDP UPF - OAI-CN5G-UPF v2.2.0 (2025.12.13) - https://gitlab.eurecom.fr/oai/cn5g/oai-cn5g-upf
-- UE / RAN - UERANSIM v3.2.7 (2025.10.25) - https://github.com/aligungr/UERANSIM
+- 5GC - free5GC v4.2.3 (2026.09.16) - https://github.com/free5gc/free5gc
+- eBPF/XDP UPF - OAI-CN5G-UPF v2.2.1 (2026.09.09) - https://github.com/openairinterface/oai-cn5g-upf
+- UE / RAN - UERANSIM v3.3.0 (2026.09.06) - https://github.com/aligungr/UERANSIM
 
 Each VMs are as follows.  
 | VM | SW & Role | IP address | OS | CPU<br>(Min) | Mem<br>(Min) | HDD<br>(Min) |
@@ -111,9 +111,9 @@ The DN is as follows.
 ## Changes in configuration files of free5GC 5GC, OAI-CN5G-UPF and UERANSIM UE / RAN
 
 Please refer to the following for building free5GC, OAI-CN5G-UPF and UERANSIM respectively.
-- free5GC v4.2.0 (2026.01.14) - https://free5gc.org/guide/
-- OAI-CN5G-UPF v2.2.0 (2025.12.13) - https://github.com/s5uishida/install_oai_upf
-- UERANSIM v3.2.7 (2025.10.25) - https://github.com/aligungr/UERANSIM/wiki/Installation
+- free5GC v4.2.3 (2026.09.16) - https://free5gc.org/guide/
+- OAI-CN5G-UPF v2.2.1 (2026.09.09) - https://github.com/s5uishida/install_oai_upf
+- UERANSIM v3.3.0 (2026.09.06) - https://github.com/aligungr/UERANSIM/wiki/Installation
 
 <a id="changes_cp"></a>
 
@@ -128,8 +128,8 @@ For the sake of simplicity, This time, only DNN will be changed. S-NSSAI of all 
 
 - `free5gc/config/amfcfg.yaml`
 ```diff
---- amfcfg.yaml.orig    2024-10-13 05:09:24.000000000 +0900
-+++ amfcfg.yaml 2025-05-04 19:42:17.462006265 +0900
+--- amfcfg.yaml.orig    2026-09-20 09:14:44.506941058 +0900
++++ amfcfg.yaml 2026-09-20 09:25:50.051605401 +0900
 @@ -5,7 +5,7 @@
  configuration:
    amfName: AMF # the name of this AMF
@@ -139,7 +139,7 @@ For the sake of simplicity, This time, only DNN will be changed. S-NSSAI of all 
    ngapPort: 38412 # the SCTP port listened by NGAP
  
    # Service-based Interface (SBI) Configuration
-@@ -30,22 +30,22 @@
+@@ -31,22 +31,22 @@
    servedGuamiList:
      # <GUAMI> = <MCC><MNC><AMF ID>
      - plmnId: # Public Land Mobile Network ID, <PLMN ID> = <MCC><MNC>
@@ -227,9 +227,9 @@ For the sake of simplicity, This time, only DNN will be changed. S-NSSAI of all 
 ```
 - `free5gc/config/smfcfg.yaml`
 ```diff
---- smfcfg.yaml.orig    2024-10-13 05:09:24.000000000 +0900
-+++ smfcfg.yaml 2025-05-04 21:00:46.538990509 +0900
-@@ -42,16 +42,16 @@
+--- smfcfg.yaml.orig    2026-09-20 09:32:38.811265818 +0900
++++ smfcfg.yaml 2026-09-20 09:39:58.458076572 +0900
+@@ -43,16 +43,16 @@
  
    # Optional: PLMN IDs configuration.
    plmnList:
@@ -251,7 +251,7 @@ For the sake of simplicity, This time, only DNN will be changed. S-NSSAI of all 
      assocFailAlertInterval: 10s
      assocFailRetryInterval: 30s
      heartbeatInterval: 10s
-@@ -63,8 +63,8 @@
+@@ -64,8 +64,8 @@
          type: AN # the type of the node (AN or UPF)
        UPF: # the name of the node
          type: UPF # the type of the node (AN or UPF)
@@ -262,7 +262,7 @@ For the sake of simplicity, This time, only DNN will be changed. S-NSSAI of all 
          sNssaiUpfInfos: # S-NSSAI information list for this UPF
            - sNssai: # S-NSSAI (Single Network Slice Selection Assistance Information)
                sst: 1 # Slice/Service Type (uinteger, range: 0~255)
-@@ -91,7 +91,7 @@
+@@ -92,7 +92,7 @@
          interfaces: # Interface list for this UPF
            - interfaceType: N3 # the type of the interface (N3 or N9)
              endpoints: # the IP address of this N3/N9 interface on this UPF
@@ -271,7 +271,7 @@ For the sake of simplicity, This time, only DNN will be changed. S-NSSAI of all 
              networkInstances: # Data Network Name (DNN)
                - internet
  
-@@ -99,7 +99,7 @@
+@@ -100,7 +100,7 @@
      links:
        - A: gNB1
          B: UPF
@@ -301,8 +301,8 @@ There is no change.
 
 - `UERANSIM/config/free5gc-gnb.yaml`
 ```diff
---- free5gc-gnb.yaml.orig       2024-12-11 20:31:30.000000000 +0900
-+++ free5gc-gnb.yaml    2025-05-04 19:47:48.421731012 +0900
+--- free5gc-gnb.yaml.orig       2026-09-07 02:39:26.000000000 +0900
++++ free5gc-gnb.yaml    2026-09-20 01:07:35.981147236 +0900
 @@ -1,17 +1,17 @@
 -mcc: '208'          # Mobile Country Code value
 -mnc: '93'           # Mobile Network Code value (2 or 3 digits)
@@ -335,8 +335,8 @@ There is no change.
 
 - `UERANSIM/config/free5gc-ue.yaml`
 ```diff
---- free5gc-ue.yaml.orig        2025-03-16 15:49:12.000000000 +0900
-+++ free5gc-ue.yaml     2025-05-04 19:49:27.180000029 +0900
+--- free5gc-ue.yaml.orig        2026-09-07 04:20:36.000000000 +0900
++++ free5gc-ue.yaml     2026-09-20 01:11:17.272141414 +0900
 @@ -1,9 +1,9 @@
  # IMSI number of the UE. IMSI = [MCC|MNC|MSISDN] (In total 15 digits)
 -supi: 'imsi-208930000000001'
@@ -349,8 +349,8 @@ There is no change.
 +mnc: '01'
  # SUCI Protection Scheme : 0 for Null-scheme, 1 for Profile A and 2 for Profile B
  protectionScheme: 0
- # Home Network Public Key for protecting with SUCI Profile A
-@@ -31,7 +31,7 @@
+ # Home Network Public Key for protecting with SUCI
+@@ -39,7 +39,7 @@
  
  # List of gNB IP addresses for Radio Link Simulation
  gnbSearchList:
@@ -376,9 +376,9 @@ See [this](https://github.com/s5uishida/install_oai_upf#setup_dn).
 ## Build free5GC, OAI-CN5G-UPF and UERANSIM
 
 Please refer to the following for building free5GC, OAI-CN5G-UPF and UERANSIM respectively.
-- free5GC v4.2.0 (2026.01.14) - https://free5gc.org/guide/
-- OAI-CN5G-UPF v2.2.0 (2025.12.13) - https://github.com/s5uishida/install_oai_upf
-- UERANSIM v3.2.7 (2025.10.25) - https://github.com/aligungr/UERANSIM/wiki/Installation
+- free5GC v4.2.3 (2026.09.16) - https://free5gc.org/guide/
+- OAI-CN5G-UPF v2.2.1 (2026.09.09) - https://github.com/s5uishida/install_oai_upf
+- UERANSIM v3.3.0 (2026.09.06) - https://github.com/aligungr/UERANSIM/wiki/Installation
 
 Install MongoDB on free5GC 5GC C-Plane machine.
 [MongoDB Compass](https://www.mongodb.com/products/compass) is a convenient tool to look at the MongoDB database.
@@ -408,7 +408,7 @@ Create the following shell script and run it.
 
 PID_LIST=()
 
-NF_LIST="nrf amf smf udr pcf udm nssf ausf chf nef bsf"
+NF_LIST="nrf scp amf smf udr pcf udm nssf ausf chf nef bsf"
 
 export GIN_MODE=release
 
@@ -429,10 +429,10 @@ wait ${PID_LIST}
 ```
 The PFCP association log between OAI-CN5G-UPF and free5GC SMF is as follows.
 ```
-[2026-01-23 22:58:10.708] [upf_n4 ] [info] handle_receive(30 bytes)
-[2026-01-23 22:58:10.708] [upf_n4 ] [info] Handle SX ASSOCIATION SETUP REQUEST
-[2026-01-23 22:58:10.709] [upf_n4 ] [info] handle_receive(16 bytes)
-[2026-01-23 22:58:10.709] [upf_n4 ] [info] Received SX HEARTBEAT REQUEST
+[2026-09-20 10:06:24.389] [upf_n4 ] [info] handle_receive(30 bytes)
+[2026-09-20 10:06:24.389] [upf_n4 ] [info] Handle SX ASSOCIATION SETUP REQUEST
+[2026-09-20 10:06:24.390] [upf_n4 ] [info] handle_receive(16 bytes)
+[2026-09-20 10:06:24.390] [upf_n4 ] [info] Received SX HEARTBEAT REQUEST
 ```
 
 <a id="run_ueran"></a>
@@ -453,20 +453,19 @@ https://github.com/aligungr/UERANSIM/wiki/Usage
 Start gNB as follows.
 ```
 # ./nr-gnb -c ../config/free5gc-gnb.yaml
-UERANSIM v3.2.7
-[2026-01-23 22:58:44.623] [sctp] [info] Trying to establish SCTP connection... (192.168.0.141:38412)
-[2026-01-23 22:58:44.627] [sctp] [info] SCTP connection established (192.168.0.141:38412)
-[2026-01-23 22:58:44.627] [sctp] [debug] SCTP association setup ascId[9]
-[2026-01-23 22:58:44.627] [ngap] [debug] Sending NG Setup Request
-[2026-01-23 22:58:44.629] [ngap] [debug] NG Setup Response received
-[2026-01-23 22:58:44.629] [ngap] [info] NG Setup procedure is successful
+UERANSIM v3.3.0
+[2026-09-20 10:07:20.737] [sctp] [info] Trying to establish SCTP connection... (192.168.0.141:38412)
+[2026-09-20 10:07:20.741] [sctp] [info] SCTP connection established (192.168.0.141:38412)
+[2026-09-20 10:07:20.741] [sctp] [debug] SCTP association setup ascId[4]
+[2026-09-20 10:07:20.741] [ngap] [debug] Sending NG Setup Request
+[2026-09-20 10:07:20.742] [ngap] [debug] NG Setup Response received
+[2026-09-20 10:07:20.742] [ngap] [info] NG Setup procedure is successful
 ```
 The free5GC C-Plane log when executed is as follows.
 ```
-2026-01-23T22:58:44.637877925+09:00 [INFO][AMF][Ngap] [AMF] SCTP Accept from: 192.168.0.131:44021
-2026-01-23T22:58:44.638561442+09:00 [INFO][AMF][Ngap] Create a new NG connection for: 192.168.0.131:44021
-2026-01-23T22:58:44.639327488+09:00 [INFO][AMF][Ngap][ran_addr:192.168.0.131:44021] Handle NGSetupRequest
-2026-01-23T22:58:44.639368617+09:00 [INFO][AMF][Ngap][ran_addr:192.168.0.131:44021] Send NG-Setup response
+2026-09-20T10:07:20.723086345+09:00 [INFO][AMF][Ngap] [AMF] SCTP Accept from: 192.168.0.131:46060
+2026-09-20T10:07:20.723977094+09:00 [INFO][AMF][Ngap] Create a new NG connection for: 192.168.0.131:46060
+2026-09-20T10:07:20.724018172+09:00 [INFO][AMF][Ngap][ran_addr:192.168.0.131:46060] Send NG-Setup response
 ```
 
 <a id="start_ue"></a>
@@ -476,482 +475,429 @@ The free5GC C-Plane log when executed is as follows.
 Start UE as follows. This will register the UE with 5GC and establish a PDU session.
 ```
 # ./nr-ue -c ../config/free5gc-ue.yaml
-UERANSIM v3.2.7
-[2026-01-23 22:59:18.921] [nas] [info] UE switches to state [MM-DEREGISTERED/PLMN-SEARCH]
-[2026-01-23 22:59:18.922] [rrc] [debug] New signal detected for cell[1], total [1] cells in coverage
-[2026-01-23 22:59:18.922] [nas] [info] Selected plmn[001/01]
-[2026-01-23 22:59:18.922] [rrc] [info] Selected cell plmn[001/01] tac[1] category[SUITABLE]
-[2026-01-23 22:59:18.922] [nas] [info] UE switches to state [MM-DEREGISTERED/PS]
-[2026-01-23 22:59:18.922] [nas] [info] UE switches to state [MM-DEREGISTERED/NORMAL-SERVICE]
-[2026-01-23 22:59:18.922] [nas] [debug] Initial registration required due to [MM-DEREG-NORMAL-SERVICE]
-[2026-01-23 22:59:18.924] [nas] [debug] UAC access attempt is allowed for identity[0], category[MO_sig]
-[2026-01-23 22:59:18.924] [nas] [debug] Sending Initial Registration
-[2026-01-23 22:59:18.924] [rrc] [debug] Sending RRC Setup Request
-[2026-01-23 22:59:18.924] [nas] [info] UE switches to state [MM-REGISTER-INITIATED]
-[2026-01-23 22:59:18.925] [rrc] [info] RRC connection established
-[2026-01-23 22:59:18.925] [rrc] [info] UE switches to state [RRC-CONNECTED]
-[2026-01-23 22:59:18.925] [nas] [info] UE switches to state [CM-CONNECTED]
-[2026-01-23 22:59:18.977] [nas] [debug] Authentication Request received
-[2026-01-23 22:59:18.977] [nas] [debug] Received SQN [00000000002E]
-[2026-01-23 22:59:18.977] [nas] [debug] SQN-MS [000000000000]
-[2026-01-23 22:59:19.003] [nas] [debug] Security Mode Command received
-[2026-01-23 22:59:19.004] [nas] [debug] Selected integrity[2] ciphering[0]
-[2026-01-23 22:59:19.162] [nas] [debug] Registration accept received
-[2026-01-23 22:59:19.162] [nas] [info] UE switches to state [MM-REGISTERED/NORMAL-SERVICE]
-[2026-01-23 22:59:19.162] [nas] [debug] Sending Registration Complete
-[2026-01-23 22:59:19.162] [nas] [info] Initial Registration is successful
-[2026-01-23 22:59:19.162] [nas] [debug] Sending PDU Session Establishment Request
-[2026-01-23 22:59:19.163] [nas] [debug] UAC access attempt is allowed for identity[0], category[MO_sig]
-[2026-01-23 22:59:19.368] [nas] [debug] Configuration Update Command received
-[2026-01-23 22:59:19.529] [nas] [debug] PDU Session Establishment Accept received
-[2026-01-23 22:59:19.529] [nas] [info] PDU Session establishment is successful PSI[1]
-[2026-01-23 22:59:19.547] [app] [info] Connection setup for PDU session[1] is successful, TUN interface[uesimtun0, 10.60.0.1] is up.
+UERANSIM v3.3.0
+[2026-09-20 10:08:22.430] [nas] [info] UE switches to state [MM-DEREGISTERED/PLMN-SEARCH]
+[2026-09-20 10:08:22.431] [rrc] [debug] New signal detected for cell[1], total [1] cells in coverage
+[2026-09-20 10:08:22.431] [nas] [info] Selected plmn[001/01]
+[2026-09-20 10:08:22.431] [rrc] [info] Selected cell plmn[001/01] tac[1] category[SUITABLE]
+[2026-09-20 10:08:22.431] [nas] [info] UE switches to state [MM-DEREGISTERED/PS]
+[2026-09-20 10:08:22.431] [nas] [info] UE switches to state [MM-DEREGISTERED/NORMAL-SERVICE]
+[2026-09-20 10:08:22.431] [nas] [debug] Initial registration required due to [MM-DEREG-NORMAL-SERVICE]
+[2026-09-20 10:08:22.431] [nas] [debug] UAC access attempt is allowed for identity[0], category[MO_sig]
+[2026-09-20 10:08:22.431] [nas] [debug] Sending Initial Registration
+[2026-09-20 10:08:22.432] [nas] [info] UE switches to state [MM-REGISTER-INITIATED]
+[2026-09-20 10:08:22.432] [rrc] [debug] Sending RRC Setup Request
+[2026-09-20 10:08:22.432] [rrc] [info] RRC connection established
+[2026-09-20 10:08:22.432] [rrc] [info] UE switches to state [RRC-CONNECTED]
+[2026-09-20 10:08:22.432] [nas] [info] UE switches to state [CM-CONNECTED]
+[2026-09-20 10:08:22.478] [nas] [debug] Authentication Request received
+[2026-09-20 10:08:22.478] [nas] [debug] Received SQN [000000000032]
+[2026-09-20 10:08:22.478] [nas] [debug] SQN-MS [000000000000]
+[2026-09-20 10:08:22.485] [nas] [debug] Security Mode Command received
+[2026-09-20 10:08:22.485] [nas] [debug] Selected integrity[2] ciphering[0]
+[2026-09-20 10:08:22.561] [nas] [debug] Registration accept received
+[2026-09-20 10:08:22.561] [nas] [info] UE switches to state [MM-REGISTERED/NORMAL-SERVICE]
+[2026-09-20 10:08:22.562] [nas] [debug] Sending Registration Complete
+[2026-09-20 10:08:22.562] [nas] [info] Initial Registration is successful
+[2026-09-20 10:08:22.562] [nas] [debug] Sending PDU Session Establishment Request
+[2026-09-20 10:08:22.562] [nas] [debug] UAC access attempt is allowed for identity[0], category[MO_sig]
+[2026-09-20 10:08:22.764] [nas] [debug] Configuration Update Command received
+[2026-09-20 10:08:22.872] [nas] [debug] PDU Session Establishment Accept received
+[2026-09-20 10:08:22.872] [nas] [info] PDU Session establishment is successful PSI[1]
+[2026-09-20 10:08:22.894] [app] [info] Connection setup for PDU session[1] is successful, TUN interface[uesimtun0, 10.60.0.1] is up.
 ```
 The free5GC C-Plane log when executed is as follows.
 ```
-2026-01-23T22:59:18.906339767+09:00 [INFO][AMF][Ngap][ran_addr:192.168.0.131:44021] Handle InitialUEMessage
-2026-01-23T22:59:18.906393344+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:44021] New RanUe [RanUeNgapID:1][AmfUeNgapID:1]
-2026-01-23T22:59:18.906427713+09:00 [INFO][AMF][Ngap][ran_addr:192.168.0.131:44021] 5GSMobileIdentity ["SUCI":"suci-0-001-01-0000-0-0-0000000000", err: <nil>]
-2026-01-23T22:59:18.906475211+09:00 [INFO][AMF][CTX] New AmfUe [supi:][guti:00101cafe0000000001]
-2026-01-23T22:59:18.906495618+09:00 [INFO][AMF][Gmm] Handle event[Gmm Message], transition from [Deregistered] to [Deregistered]
-2026-01-23T22:59:18.906501376+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] Handle Registration Request
-2026-01-23T22:59:18.906507004+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] RegistrationType: Initial Registration
-2026-01-23T22:59:18.906513203+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] MobileIdentity5GS: SUCI[suci-0-001-01-0000-0-0-0000000000]
-2026-01-23T22:59:18.906523239+09:00 [INFO][AMF][Gmm] Handle event[Start Authentication], transition from [Deregistered] to [Authentication]
-2026-01-23T22:59:18.906529130+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] Authentication procedure
-2026-01-23T22:59:18.907606810+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:18.909513818+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:18.912580410+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:18.914981418+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:18.916384469+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=AMF&target-nf-type=AUSF |  |
-2026-01-23T22:59:18.917386832+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:18.918684044+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:18.921317935+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:18.923123755+09:00 [INFO][AUSF][UeAuth] HandleUeAuthPostRequest
-2026-01-23T22:59:18.923237124+09:00 [INFO][AUSF][UeAuth] Serving network authorized
-2026-01-23T22:59:18.924070870+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:18.924938431+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:18.927087836+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:18.927901031+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:18.928947235+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=AUSF&service-names=nudm-ueau&target-nf-type=UDM |  |
-2026-01-23T22:59:18.929922129+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:18.930834800+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:18.933597173+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:18.935570183+09:00 [INFO][UDM][UEAU] Handle GenerateAuthDataRequest
-2026-01-23T22:59:18.938570784+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:18.940277040+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:18.942839089+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:18.943208355+09:00 [INFO][UDM][Suci] scheme 0
-2026-01-23T22:59:18.943340929+09:00 [INFO][UDM][Suci] SUPI type is IMSI
-2026-01-23T22:59:18.943701437+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:18.944790024+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:18.946752601+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:18.947531987+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:18.948375580+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=UDM&target-nf-type=UDR |  |
-2026-01-23T22:59:18.951453774+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/subscription-data/imsi-001010000000000/authentication-data/authentication-subscription |  |
-2026-01-23T22:59:18.952007465+09:00 [INFO][UDM][Proc] ModifyAuthenticationSubscriptionRequest:  [{replace /sequenceNumber  { 00000000002f map[] 0 }}]
-2026-01-23T22:59:18.954153280+09:00 [INFO][UDR][GIN] | 204 |       127.0.0.1 | PATCH   | /nudr-dr/v2/subscription-data/imsi-001010000000000/authentication-data/authentication-subscription |  |
-2026-01-23T22:59:18.954546047+09:00 [INFO][UDM][GIN] | 200 |       127.0.0.1 | POST    | /nudm-ueau/v1/suci-0-001-01-0000-0-0-0000000000/security-information/generate-auth-data |  |
-2026-01-23T22:59:18.955059085+09:00 [INFO][AUSF][UeAuth] Add SuciSupiPair (suci-0-001-01-0000-0-0-0000000000, imsi-001010000000000) to map.
-2026-01-23T22:59:18.955263601+09:00 [INFO][AUSF][UeAuth] Use 5G AKA auth method
-2026-01-23T22:59:18.955376902+09:00 [INFO][AUSF][5gAka] XresStar = 3864303861623462393535316634323061663162333434656230633664343134
-2026-01-23T22:59:18.955681214+09:00 [INFO][AUSF][GIN] | 201 |       127.0.0.1 | POST    | /nausf-auth/v1/ue-authentications |  |
-2026-01-23T22:59:18.956430352+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] Send Authentication Request
-2026-01-23T22:59:18.956574338+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:44021] Send Downlink Nas Transport
-2026-01-23T22:59:18.956813782+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] Start T3560 timer
-2026-01-23T22:59:18.958034700+09:00 [INFO][AMF][Ngap][ran_addr:192.168.0.131:44021] Handle UplinkNASTransport
-2026-01-23T22:59:18.958177146+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:44021] Handle UplinkNASTransport (RAN UE NGAP ID: 1)
-2026-01-23T22:59:18.958284514+09:00 [INFO][AMF][Gmm] Handle event[Gmm Message], transition from [Authentication] to [Authentication]
-2026-01-23T22:59:18.958370188+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] Handle Authentication Response
-2026-01-23T22:59:18.958418653+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] Stop T3560 timer
-2026-01-23T22:59:18.959282702+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:18.960625898+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:18.963814195+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:18.967617796+09:00 [INFO][AUSF][5gAka] Auth5gAkaComfirmRequest
-2026-01-23T22:59:18.967828116+09:00 [INFO][AUSF][5gAka] res*: 3864303861623462393535316634323061663162333434656230633664343134
-Xres*: 3864303861623462393535316634323061663162333434656230633664343134
-2026-01-23T22:59:18.968184946+09:00 [INFO][AUSF][5gAka] 5G AKA confirmation succeeded
-2026-01-23T22:59:18.969308280+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:18.970237484+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:18.973134581+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:18.974722324+09:00 [INFO][UDM][UEAU] Handle ConfirmAuthDataRequest
-2026-01-23T22:59:18.975623433+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:18.976762443+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:18.979487991+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:18.981986457+09:00 [INFO][UDR][GIN] | 204 |       127.0.0.1 | PUT     | /nudr-dr/v2/subscription-data/imsi-001010000000000/authentication-data/authentication-status |  |
-2026-01-23T22:59:18.982321619+09:00 [INFO][UDM][GIN] | 201 |       127.0.0.1 | POST    | /nudm-ueau/v1/imsi-001010000000000/auth-events |  |
-2026-01-23T22:59:18.982751021+09:00 [INFO][AUSF][GIN] | 200 |       127.0.0.1 | PUT     | /nausf-auth/v1/ue-authentications/suci-0-001-01-0000-0-0-0000000000/5g-aka-confirmation |  |
-2026-01-23T22:59:18.983295877+09:00 [INFO][AMF][Gmm] Handle event[Authentication Success], transition from [Authentication] to [SecurityMode]
-2026-01-23T22:59:18.983477867+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Send Security Mode Command
-2026-01-23T22:59:18.983522084+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:44021] Send Downlink Nas Transport
-2026-01-23T22:59:18.983596898+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Start T3560 timer
-2026-01-23T22:59:18.986461325+09:00 [INFO][AMF][Ngap][ran_addr:192.168.0.131:44021] Handle UplinkNASTransport
-2026-01-23T22:59:18.986577723+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:44021] Handle UplinkNASTransport (RAN UE NGAP ID: 1)
-2026-01-23T22:59:18.986669907+09:00 [INFO][AMF][Gmm] Handle event[Gmm Message], transition from [SecurityMode] to [SecurityMode]
-2026-01-23T22:59:18.986805188+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Handle Security Mode Complete
-2026-01-23T22:59:18.986865186+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Stop T3560 timer
-2026-01-23T22:59:18.986955324+09:00 [INFO][AMF][Gmm] Handle event[SecurityMode Success], transition from [SecurityMode] to [ContextSetup]
-2026-01-23T22:59:18.987026847+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Handle InitialRegistration
-2026-01-23T22:59:18.988167172+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:18.989664690+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:18.991743952+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:18.992516792+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:18.993645564+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=AMF&supi=imsi-001010000000000&target-nf-type=UDM |  |
-2026-01-23T22:59:18.994378758+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:18.995881357+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:18.998637034+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:18.999808356+09:00 [INFO][UDM][Consumer] TwoLayerPathHandlerFunc,  imsi-001010000000000 nssai
-2026-01-23T22:59:18.999840097+09:00 [INFO][UDM][SDM] Handle GetNssai
-2026-01-23T22:59:19.002505087+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.003855146+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.006562791+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.008392030+09:00 [INFO][UDR][DataRepo] QueryAmDataProcedure: ueId: imsi-001010000000000, servingPlmnId: 00101
-2026-01-23T22:59:19.009045037+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/subscription-data/imsi-001010000000000/00101/provisioned-data/am-data?supported-features= |  |
-2026-01-23T22:59:19.010233569+09:00 [INFO][UDM][GIN] | 200 |       127.0.0.1 | GET     | /nudm-sdm/v2/imsi-001010000000000/nssai?plmn-id=%7B%22mcc%22%3A%22001%22%2C%22mnc%22%3A%2201%22%7D |  |
-2026-01-23T22:59:19.010887857+09:00 [INFO][AMF][Gmm] RequestedNssai: &{Iei:47 Len:5 Buffer:[4 1 1 2 3]}
-2026-01-23T22:59:19.011055094+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] RequestedNssai - ServingSnssai: &{Sst:1 Sd:010203}, HomeSnssai: <nil>
-2026-01-23T22:59:19.012000333+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.013406094+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.015550732+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.016342086+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:19.017963309+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=AMF&supi=imsi-001010000000000&target-nf-type=UDM |  |
-2026-01-23T22:59:19.020994016+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.022143314+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.024990120+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.026908568+09:00 [INFO][UDM][UECM] Handle RegistrationAmf3gppAccess
-2026-01-23T22:59:19.027056078+09:00 [INFO][UDM][UECM] UEID: imsi-001010000000000
-2026-01-23T22:59:19.027839069+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.029061892+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.031694915+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.034164850+09:00 [INFO][UDR][GIN] | 204 |       127.0.0.1 | PUT     | /nudr-dr/v2/subscription-data/imsi-001010000000000/context-data/amf-3gpp-access |  |
-2026-01-23T22:59:19.034527182+09:00 [INFO][UDM][GIN] | 201 |       127.0.0.1 | PUT     | /nudm-uecm/v1/imsi-001010000000000/registrations/amf-3gpp-access |  |
-2026-01-23T22:59:19.035666763+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.037208736+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.040179286+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.041493001+09:00 [INFO][UDM][Consumer] TwoLayerPathHandlerFunc,  imsi-001010000000000 am-data
-2026-01-23T22:59:19.041724224+09:00 [INFO][UDM][SDM] Handle GetAmData
-2026-01-23T22:59:19.042551412+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.043641523+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.046247457+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.047303297+09:00 [INFO][UDR][DataRepo] QueryAmDataProcedure: ueId: imsi-001010000000000, servingPlmnId: 00101
-2026-01-23T22:59:19.048029743+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/subscription-data/imsi-001010000000000/00101/provisioned-data/am-data?supported-features= |  |
-2026-01-23T22:59:19.048432202+09:00 [INFO][UDM][GIN] | 200 |       127.0.0.1 | GET     | /nudm-sdm/v2/imsi-001010000000000/am-data?plmn-id=%7B%22mcc%22%3A%22001%22%2C%22mnc%22%3A%2201%22%7D |  |
-2026-01-23T22:59:19.050352261+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.051552322+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.054401032+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.055734809+09:00 [INFO][UDM][Consumer] TwoLayerPathHandlerFunc,  imsi-001010000000000 smf-select-data
-2026-01-23T22:59:19.055845306+09:00 [INFO][UDM][SDM] Handle GetSmfSelectData
-2026-01-23T22:59:19.056843776+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.058045233+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.060545623+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.062004734+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/subscription-data/imsi-001010000000000/00101/provisioned-data/smf-selection-subscription-data?supported-features= |  |
-2026-01-23T22:59:19.062617144+09:00 [INFO][UDM][GIN] | 200 |       127.0.0.1 | GET     | /nudm-sdm/v2/imsi-001010000000000/smf-select-data?plmn-id=%7B%22mcc%22%3A%22001%22%2C%22mnc%22%3A%2201%22%7D |  |
-2026-01-23T22:59:19.063879116+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.066168733+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.069930966+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.072830544+09:00 [INFO][UDM][Consumer] TwoLayerPathHandlerFunc,  imsi-001010000000000 ue-context-in-smf-data
-2026-01-23T22:59:19.072931578+09:00 [INFO][UDM][SDM] Handle GetUeContextInSmfData
-2026-01-23T22:59:19.073578446+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.074789938+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.077303174+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.079150329+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/subscription-data/imsi-001010000000000/context-data/smf-registrations?supported-features= |  |
-2026-01-23T22:59:19.079619554+09:00 [INFO][UDM][GIN] | 200 |       127.0.0.1 | GET     | /nudm-sdm/v2/imsi-001010000000000/ue-context-in-smf-data |  |
-2026-01-23T22:59:19.080497397+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.081995723+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.085016380+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.087049092+09:00 [INFO][UDM][Consumer] TwoLayerPathHandlerFunc,  imsi-001010000000000 sdm-subscriptions
-2026-01-23T22:59:19.088158252+09:00 [INFO][UDM][SDM] Handle Subscribe
-2026-01-23T22:59:19.088964289+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.090254155+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.092885495+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.096058826+09:00 [INFO][UDR][GIN] | 201 |       127.0.0.1 | POST    | /nudr-dr/v2/subscription-data/imsi-001010000000000/context-data/sdm-subscriptions |  |
-2026-01-23T22:59:19.096474412+09:00 [INFO][UDM][GIN] | 201 |       127.0.0.1 | POST    | /nudm-sdm/v2/imsi-001010000000000/sdm-subscriptions |  |
-2026-01-23T22:59:19.097453289+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.099068512+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.101194485+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.101963606+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:19.103191840+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?preferred-locality=area1&requester-nf-type=AMF&supi=imsi-001010000000000&target-nf-type=PCF |  |
-2026-01-23T22:59:19.103823232+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.104949259+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.107977157+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.110387700+09:00 [INFO][PCF][AmPol] Handle AM Policy Create Request
-2026-01-23T22:59:19.111299475+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.112431759+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.114493702+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.115314338+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:19.116191269+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=PCF&target-nf-type=UDR |  |
-2026-01-23T22:59:19.117188395+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.118624769+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.121352531+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.123116144+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/policy-data/ues/imsi-001010000000000/am-data |  |
-2026-01-23T22:59:19.124175722+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.125653863+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.127793756+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.128602227+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:19.130069701+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?guami=%7B%22plmnId%22%3A%7B%22mcc%22%3A%22001%22%2C%22mnc%22%3A%2201%22%7D%2C%22amfId%22%3A%22cafe00%22%7D&requester-nf-type=PCF&target-nf-type=AMF |  |
-2026-01-23T22:59:19.130732988+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.132312556+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.137874181+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.140076622+09:00 [INFO][AMF][Comm] Handle AMF Status Change Subscribe Request
-2026-01-23T22:59:19.140219831+09:00 [INFO][AMF][Comm] new AMF Status Subscription[1]
-2026-01-23T22:59:19.140280104+09:00 [INFO][AMF][GIN] | 201 |       127.0.0.1 | POST    | /namf-comm/v1/subscriptions |  |
-2026-01-23T22:59:19.140836447+09:00 [INFO][PCF][GIN] | 201 |       127.0.0.1 | POST    | /npcf-am-policy-control/v1/policies |  |
-2026-01-23T22:59:19.141368545+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Send Registration Accept
-2026-01-23T22:59:19.141553615+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:44021] Send Initial Context Setup Request
-2026-01-23T22:59:19.141867394+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Start T3550 timer
-2026-01-23T22:59:19.142478745+09:00 [INFO][AMF][Ngap][ran_addr:192.168.0.131:44021] Handle InitialContextSetupResponse
-2026-01-23T22:59:19.142604092+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:44021] Handle InitialContextSetupResponse (RAN UE NGAP ID: 1)
-2026-01-23T22:59:19.348141972+09:00 [INFO][AMF][Ngap][ran_addr:192.168.0.131:44021] Handle UplinkNASTransport
-2026-01-23T22:59:19.348159516+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:44021] Handle UplinkNASTransport (RAN UE NGAP ID: 1)
-2026-01-23T22:59:19.348198331+09:00 [INFO][AMF][Gmm] Handle event[Gmm Message], transition from [ContextSetup] to [ContextSetup]
-2026-01-23T22:59:19.348204175+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Handle Registration Complete
-2026-01-23T22:59:19.348209355+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Stop T3550 timer
-2026-01-23T22:59:19.348228509+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Send Configuration Update Command
-2026-01-23T22:59:19.348235336+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:44021] Send Downlink Nas Transport
-2026-01-23T22:59:19.348284949+09:00 [INFO][AMF][Gmm] Handle event[ContextSetup Success], transition from [ContextSetup] to [Registered]
-2026-01-23T22:59:19.348480239+09:00 [INFO][AMF][Ngap][ran_addr:192.168.0.131:44021] Handle UplinkNASTransport
-2026-01-23T22:59:19.348495773+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:44021] Handle UplinkNASTransport (RAN UE NGAP ID: 1)
-2026-01-23T22:59:19.348533606+09:00 [INFO][AMF][Gmm] Handle event[Gmm Message], transition from [Registered] to [Registered]
-2026-01-23T22:59:19.348540338+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Handle UL NAS Transport
-2026-01-23T22:59:19.348549690+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Transport 5GSM Message to SMF
-2026-01-23T22:59:19.348559195+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Select SMF [snssai: {Sst:1 Sd:010203}, dnn: internet]
-2026-01-23T22:59:19.351977792+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.354027630+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.356160099+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.356853626+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:19.357730621+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=AMF&target-nf-type=NSSF |  |
-2026-01-23T22:59:19.358327161+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.359654265+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.362150827+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.363679540+09:00 [INFO][NSSF][NsSel] Handle NSSelectionGet
-2026-01-23T22:59:19.364095233+09:00 [WARN][NSSF][Util] No TA {"plmnId":{"mcc":"001","mnc":"01"},"tac":"000001"} in NSSF configuration
-2026-01-23T22:59:19.364378056+09:00 [INFO][NSSF][GIN] | 200 |       127.0.0.1 | GET     | /nnssf-nsselection/v2/network-slice-information?nf-id=23c75b50-5359-4da0-9dde-b318fe205014&nf-type=AMF&slice-info-request-for-pdu-session=%7B%22sNssai%22%3A%7B%22sst%22%3A1%2C%22sd%22%3A%22010203%22%7D%2C%22roamingIndication%22%3A%22NON_ROAMING%22%7D&tai=%7B%22plmnId%22%3A%7B%22mcc%22%3A%22001%22%2C%22mnc%22%3A%2201%22%7D%2C%22tac%22%3A%22000001%22%7D |  |
-2026-01-23T22:59:19.364897705+09:00 [WARN][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] nsiInformation is still nil, use default NRF[http://127.0.0.10:8000]
-2026-01-23T22:59:19.365677043+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.367044147+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.369184816+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.369936148+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:19.371190628+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?dnn=internet&preferred-locality=area1&requester-nf-type=AMF&service-names=nsmf-pdusession&snssais=%5B%7B%22sst%22%3A1%2C%22sd%22%3A%22010203%22%7D%5D&target-nf-type=SMF&target-plmn-list=%5B%7B%22mcc%22%3A%22001%22%2C%22mnc%22%3A%2201%22%7D%5D |  |
-2026-01-23T22:59:19.371874924+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.373098158+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.375939368+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.377664897+09:00 [INFO][SMF][PduSess] Receive Create SM Context Request
-2026-01-23T22:59:19.379649049+09:00 [INFO][SMF][PduSess] In HandlePDUSessionSMContextCreate
-2026-01-23T22:59:19.380865915+09:00 [INFO][SMF][CTX] UrrPeriod: 30s
-2026-01-23T22:59:19.381014610+09:00 [INFO][SMF][CTX] UrrThreshold: 500000
-2026-01-23T22:59:19.383065485+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.384295633+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.386475920+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.387214156+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:19.388335397+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=SMF&target-nf-type=UDM |  |
-2026-01-23T22:59:19.389112482+09:00 [INFO][SMF][PduSess][pdu_session_id:1][supi:imsi-001010000000000] Send NF Discovery Serving UDM Successfully
-2026-01-23T22:59:19.389497760+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.390606220+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.393414840+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.394839016+09:00 [INFO][UDM][Consumer] TwoLayerPathHandlerFunc,  imsi-001010000000000 sm-data
-2026-01-23T22:59:19.394983097+09:00 [INFO][UDM][SDM] Handle GetSmData
-2026-01-23T22:59:19.395755183+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.396970378+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.399505905+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.399950966+09:00 [INFO][UDM][SDM] getSmDataProcedure: SUPI[imsi-001010000000000] PLMNID[00101] DNN[internet] SNssai[{"sst":1,"sd":"010203"}]
-2026-01-23T22:59:19.401720019+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/subscription-data/imsi-001010000000000/00101/provisioned-data/sm-data?single-nssai=%7B%22sst%22%3A1%2C%22sd%22%3A%22010203%22%7D |  |
-2026-01-23T22:59:19.402269509+09:00 [INFO][UDM][GIN] | 200 |       127.0.0.1 | GET     | /nudm-sdm/v2/imsi-001010000000000/sm-data?dnn=internet&plmn-id=%7B%22mcc%22%3A%22001%22%2C%22mnc%22%3A%2201%22%7D&single-nssai=%7B%22sst%22%3A1%2C%22sd%22%3A%22010203%22%7D |  |
-2026-01-23T22:59:19.403207272+09:00 [INFO][SMF][GSM] In HandlePDUSessionEstablishmentRequest
-2026-01-23T22:59:19+09:00 [INFO][NAS][Convert] ProtocolOrContainerList:  [0xc000614980 0xc0006149a0]
-2026-01-23T22:59:19.403553270+09:00 [INFO][SMF][GSM] Protocol Configuration Options
-2026-01-23T22:59:19.403596414+09:00 [INFO][SMF][GSM] &{[0xc000614980 0xc0006149a0]}
-2026-01-23T22:59:19.403631755+09:00 [INFO][SMF][GSM] Didn't Implement container type IPAddressAllocationViaNASSignallingUL
-2026-01-23T22:59:19.404563773+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.405761430+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.407812852+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.408505070+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:19.409419696+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=SMF&target-nf-instance-id=23c75b50-5359-4da0-9dde-b318fe205014&target-nf-type=AMF |  |
-2026-01-23T22:59:19.409806809+09:00 [INFO][SMF][Consumer] SendNFDiscoveryServingAMF ok
-2026-01-23T22:59:19.409852784+09:00 [INFO][SMF][CTX] Allocated UE IP address: 10.60.0.1
-2026-01-23T22:59:19.409870691+09:00 [INFO][SMF][CTX] Selected UPF: UPF
-2026-01-23T22:59:19.409882903+09:00 [INFO][SMF][PduSess][pdu_session_id:1][supi:imsi-001010000000000] Allocated PDUAdress[10.60.0.1]
-2026-01-23T22:59:19.410194557+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.411275279+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.413455667+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.414143889+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:19.414912199+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=SMF&target-nf-type=BSF |  |
-2026-01-23T22:59:19.415845161+09:00 [INFO][BSF][Proc] Handle GetPCFBindings
-[GIN] 2026/01/23 - 22:59:19 | 204 |     750.714Âµs |       127.0.0.1 | GET      "/nbsf-management/v1/pcfBindings?dnn=internet&snssai=%7B%22sst%22%3A1%2C%22sd%22%3A%22010203%22%7D&supi=imsi-001010000000000"
-2026-01-23T22:59:19.416703780+09:00 [INFO][SMF][Consumer] No PCF binding found in BSF, using NRF discovery for SUPI: imsi-001010000000000, DNN: internet
-2026-01-23T22:59:19.417495355+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.420094792+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.422234346+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.424702127+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:19.425757449+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?preferred-locality=area1&requester-nf-type=SMF&target-nf-type=PCF |  |
-2026-01-23T22:59:19.426389735+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.427306612+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.430043303+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.431748427+09:00 [INFO][PCF][SMpolicy] Handle CreateSmPolicy
-2026-01-23T22:59:19.432542591+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.433675423+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.436091121+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.438325416+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/policy-data/ues/imsi-001010000000000/sm-data?dnn=internet&snssai=%7B%22sst%22%3A1%2C%22sd%22%3A%22010203%22%7D |  |
-2026-01-23T22:59:19.442881953+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.444050966+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.446381478+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.448150695+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/application-data/influenceData?dnns=internet&snssais=%5B%7B%22sst%22%3A1%2C%22sd%22%3A%22010203%22%7D%5D&supis=imsi-001010000000000 |  |
-2026-01-23T22:59:19.448488277+09:00 [INFO][PCF][SMpolicy] Matched [0] trafficInfluDatas from UDR
-2026-01-23T22:59:19.449251003+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.450379945+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.452798013+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.454151469+09:00 [INFO][UDR][GIN] | 201 |       127.0.0.1 | POST    | /nudr-dr/v2/application-data/influenceData/subs-to-notify |  |
-2026-01-23T22:59:19.455144064+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.456273121+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.458171402+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.458851876+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:19.459492724+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=PCF&target-nf-type=BSF |  |
-2026-01-23T22:59:19.460337824+09:00 [INFO][BSF][Proc] Handle CreatePCFBinding
-2026-01-23T22:59:19.461669122+09:00 [INFO][BSF][CTX] PCF binding persisted to MongoDB with ID: 334479d0-2166-4e24-a131-ddb7b108fe6b, InsertedID: 334479d0-2166-4e24-a131-ddb7b108fe6b
-[GIN] 2026/01/23 - 22:59:19 | 201 |    1.563308ms |       127.0.0.1 | POST     "/nbsf-management/v1/pcfBindings"
-2026-01-23T22:59:19.462102562+09:00 [INFO][PCF][Consumer] Successfully registered PCF binding in BSF: 334479d0-2166-4e24-a131-ddb7b108fe6b
-2026-01-23T22:59:19.462256803+09:00 [INFO][PCF][SMpolicy] Successfully registered PCF binding in BSF with ID: 334479d0-2166-4e24-a131-ddb7b108fe6b
-2026-01-23T22:59:19.463261220+09:00 [INFO][PCF][GIN] | 201 |       127.0.0.1 | POST    | /npcf-smpolicycontrol/v1/sm-policies |  |
-2026-01-23T22:59:19.464458630+09:00 [INFO][SMF][PduSess] CHF Selection for SMContext SUPI[imsi-001010000000000] PDUSessionID[1]
-2026-01-23T22:59:19.465309315+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.466429291+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.468541494+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.469366575+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
-2026-01-23T22:59:19.470130690+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=SMF&target-nf-type=CHF |  |
-2026-01-23T22:59:19.470538273+09:00 [INFO][SMF][Charging] Handle SendConvergedChargingRequest
-2026-01-23T22:59:19.470982697+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.472032056+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.474604262+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.480110331+09:00 [INFO][CHF][ChargingPost] HandleChargingdataInitial
-2026-01-23T22:59:19.480198343+09:00 [INFO][CHF][ChargingPost] SMF charging event
-2026-01-23T22:59:19.480357539+09:00 [ERRO][CHF][ChargingPost] Charging gateway fail to send CDR to billing domain dial tcp 127.0.0.1:2121: connect: connection refused
-2026-01-23T22:59:19.480512111+09:00 [INFO][CHF][ChargingPost] Open CDR for UE imsi-001010000000000
-2026-01-23T22:59:19.480564264+09:00 [INFO][CHF][ChargingPost] NewChfUe imsi-001010000000000
-2026-01-23T22:59:19.481023299+09:00 [INFO][CHF][GIN] | 201 |       127.0.0.1 | POST    | /nchf-convergedcharging/v3/chargingdata |  |
-2026-01-23T22:59:19.481810971+09:00 [INFO][SMF][Charging] Send Charging Data Request[Init] successfully
-2026-01-23T22:59:19.482000079+09:00 [INFO][SMF][PduSess][pdu_session_id:1][supi:imsi-001010000000000] Install PCCRule[PccRuleId-1]
-2026-01-23T22:59:19.482152922+09:00 [INFO][SMF][PduSess][pdu_session_id:1][supi:imsi-001010000000000] No srcTcData and tgtTcData. Nothing to do
-2026-01-23T22:59:19.482299115+09:00 [INFO][SMF][PduSess][pdu_session_id:1][supi:imsi-001010000000000] Install PCCRule[PccRuleId-2]
-2026-01-23T22:59:19.482389449+09:00 [INFO][SMF][PduSess][pdu_session_id:1][supi:imsi-001010000000000] No srcTcData and tgtTcData. Nothing to do
-2026-01-23T22:59:19.482517205+09:00 [INFO][SMF][PduSess][pdu_session_id:1][supi:imsi-001010000000000] Has default path
-2026-01-23T22:59:19.483984240+09:00 [INFO][SMF][PduSess] Sending PFCP Session Establishment Request
-2026-01-23T22:59:19.485899445+09:00 [INFO][SMF][PduSess] Received PFCP Session Establishment Accepted Response
-2026-01-23T22:59:19.490111390+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.490967994+09:00 [INFO][UDM][Consumer] TwoLayerPathHandlerFunc,  imsi-001010000000000 sdm-subscriptions
-2026-01-23T22:59:19.491289283+09:00 [INFO][UDM][SDM] Handle Subscribe
-2026-01-23T22:59:19.493608458+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.494020882+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.497348919+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.498597820+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.502808995+09:00 [INFO][AMF][Producer] Handle N1N2 Message Transfer Request
-2026-01-23T22:59:19.503987422+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.505671088+09:00 [INFO][UDR][GIN] | 201 |       127.0.0.1 | POST    | /nudr-dr/v2/subscription-data/imsi-001010000000000/context-data/sdm-subscriptions |  |
-2026-01-23T22:59:19.506011824+09:00 [INFO][UDM][GIN] | 201 |       127.0.0.1 | POST    | /nudm-sdm/v2/imsi-001010000000000/sdm-subscriptions |  |
-2026-01-23T22:59:19.506513468+09:00 [INFO][SMF][PduSess] SDM Subscription Successful UE: imsi-001010000000000 SubscriptionId: 2
-2026-01-23T22:59:19.506590624+09:00 [INFO][SMF][GIN] | 201 |       127.0.0.1 | POST    | /nsmf-pdusession/v1/sm-contexts |  |
-2026-01-23T22:59:19.507343112+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] create smContext[pduSessionID: 1] Success
-2026-01-23T22:59:19.507869029+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:44021] Send PDU Session Resource Setup Request
-2026-01-23T22:59:19.508035574+09:00 [INFO][AMF][GIN] | 200 |       127.0.0.1 | POST    | /namf-comm/v1/ue-contexts/imsi-001010000000000/n1-n2-messages |  |
-2026-01-23T22:59:19.509873026+09:00 [INFO][AMF][Ngap][ran_addr:192.168.0.131:44021] Handle PDUSessionResourceSetupResponse
-2026-01-23T22:59:19.510038897+09:00 [INFO][AMF][Ngap][ran_addr:192.168.0.131:44021] Not comprehended IE ID 0x0079 (criticality: ignore)
-2026-01-23T22:59:19.510117079+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:44021] Handle PDUSessionResourceSetupResponse (RAN UE NGAP ID: 1)
-2026-01-23T22:59:19.511118658+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
-2026-01-23T22:59:19.513667508+09:00 [WARN][NRF][Token] Certificate verify: x509: certificate signed by unknown authority (possibly because of "x509: invalid signature: parent certificate cannot sign this kind of certificate" while trying to verify candidate authority certificate "free5gc")
-2026-01-23T22:59:19.518387078+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
-2026-01-23T22:59:19.521372892+09:00 [INFO][SMF][PduSess] Receive Update SM Context Request
-2026-01-23T22:59:19.626862831+09:00 [INFO][SMF][PduSess] Received PFCP Session Modification Accepted Response from AN UPF
-2026-01-23T22:59:19.627268957+09:00 [INFO][SMF][GIN] | 200 |       127.0.0.1 | POST    | /nsmf-pdusession/v1/sm-contexts/urn:uuid:117a7808-8f43-445f-b2d7-57ede53d6fb8/modify |  |
+2026-09-20T10:08:22.390171792+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:46060] New RanUe [RanUeNgapID:1][AmfUeNgapID:1]
+2026-09-20T10:08:22.390250338+09:00 [INFO][AMF][Ngap][ran_addr:192.168.0.131:46060] 5GSMobileIdentity ["SUCI":"suci-0-001-01-0000-0-0-0000000000", err: <nil>]
+2026-09-20T10:08:22.390282791+09:00 [INFO][AMF][CTX] New AmfUe [supi:][guti:00101cafe0000000001]
+2026-09-20T10:08:22.390322640+09:00 [INFO][AMF][Gmm] Handle event[Gmm Message], transition from [Deregistered] to [Deregistered]
+2026-09-20T10:08:22.390332364+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] Handle Registration Request
+2026-09-20T10:08:22.390339171+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] RegistrationType: Initial Registration
+2026-09-20T10:08:22.390345864+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] MobileIdentity5GS: SUCI[suci-0-001-01-0000-0-0-0000000000]
+2026-09-20T10:08:22.390357632+09:00 [INFO][AMF][Gmm] Handle event[Start Authentication], transition from [Deregistered] to [Authentication]
+2026-09-20T10:08:22.390367349+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] Authentication procedure
+2026-09-20T10:08:22.391449294+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.395194035+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.396067105+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.397277246+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=AMF&target-nf-type=AUSF |  |
+2026-09-20T10:08:22.398141750+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.402007452+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.403586329+09:00 [INFO][AUSF][UeAuth] HandleUeAuthPostRequest
+2026-09-20T10:08:22.403724898+09:00 [INFO][AUSF][UeAuth] Serving network authorized
+2026-09-20T10:08:22.404489404+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.407209782+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.407963676+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.408936612+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=AUSF&service-names=nudm-ueau&target-nf-type=UDM |  |
+2026-09-20T10:08:22.409831346+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.413370107+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.415052588+09:00 [INFO][UDM][UEAU] Handle GenerateAuthDataRequest
+2026-09-20T10:08:22.415889480+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.419438155+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.419784468+09:00 [INFO][UDM][Suci] scheme 0
+2026-09-20T10:08:22.419908239+09:00 [INFO][UDM][Suci] SUPI type is IMSI
+2026-09-20T10:08:22.420260599+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.424037785+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.426654990+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.427368570+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=UDM&target-nf-type=UDR |  |
+2026-09-20T10:08:22.430398809+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/subscription-data/imsi-001010000000000/authentication-data/authentication-subscription |  |
+2026-09-20T10:08:22.430708433+09:00 [INFO][UDM][Proc] ModifyAuthenticationSubscriptionRequest:  [{replace /sequenceNumber  { 000000000033 map[] 0 }}]
+2026-09-20T10:08:22.432854452+09:00 [INFO][UDR][GIN] | 204 |       127.0.0.1 | PATCH   | /nudr-dr/v2/subscription-data/imsi-001010000000000/authentication-data/authentication-subscription |  |
+2026-09-20T10:08:22.433258921+09:00 [INFO][UDM][GIN] | 200 |       127.0.0.1 | POST    | /nudm-ueau/v1/suci-0-001-01-0000-0-0-0000000000/security-information/generate-auth-data |  |
+2026-09-20T10:08:22.433764054+09:00 [INFO][AUSF][UeAuth] Add SuciSupiPair (suci-0-001-01-0000-0-0-0000000000, imsi-001010000000000) to map.
+2026-09-20T10:08:22.433836145+09:00 [INFO][AUSF][UeAuth] Use 5G AKA auth method
+2026-09-20T10:08:22.434061936+09:00 [INFO][AUSF][GIN] | 201 |       127.0.0.1 | POST    | /nausf-auth/v1/ue-authentications |  |
+2026-09-20T10:08:22.434572232+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] Send Authentication Request
+2026-09-20T10:08:22.434643612+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:46060] Send Downlink Nas Transport
+2026-09-20T10:08:22.434740366+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] Start T3560 timer
+2026-09-20T10:08:22.436158021+09:00 [INFO][AMF][Gmm] Handle event[Gmm Message], transition from [Authentication] to [Authentication]
+2026-09-20T10:08:22.436311002+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] Handle Authentication Response
+2026-09-20T10:08:22.436445878+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:] Stop T3560 timer
+2026-09-20T10:08:22.437733130+09:00 [INFO][AUSF][5gAka] Auth5gAkaComfirmRequest
+2026-09-20T10:08:22.437785737+09:00 [INFO][AUSF][5gAka] 5G AKA confirmation succeeded
+2026-09-20T10:08:22.438913655+09:00 [INFO][UDM][UEAU] Handle ConfirmAuthDataRequest
+2026-09-20T10:08:22.441090510+09:00 [INFO][UDR][GIN] | 204 |       127.0.0.1 | PUT     | /nudr-dr/v2/subscription-data/imsi-001010000000000/authentication-data/authentication-status |  |
+2026-09-20T10:08:22.441258041+09:00 [INFO][UDM][GIN] | 201 |       127.0.0.1 | POST    | /nudm-ueau/v1/imsi-001010000000000/auth-events |  |
+2026-09-20T10:08:22.441607572+09:00 [INFO][AUSF][GIN] | 200 |       127.0.0.1 | PUT     | /nausf-auth/v1/ue-authentications/suci-0-001-01-0000-0-0-0000000000/5g-aka-confirmation |  |
+2026-09-20T10:08:22.441911205+09:00 [INFO][AMF][Gmm] Handle event[Authentication Success], transition from [Authentication] to [SecurityMode]
+2026-09-20T10:08:22.442092679+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Send Security Mode Command
+2026-09-20T10:08:22.442226161+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:46060] Send Downlink Nas Transport
+2026-09-20T10:08:22.442276370+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Start T3560 timer
+2026-09-20T10:08:22.443481191+09:00 [INFO][AMF][Gmm] Handle event[Gmm Message], transition from [SecurityMode] to [SecurityMode]
+2026-09-20T10:08:22.443505241+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Handle Security Mode Complete
+2026-09-20T10:08:22.443519560+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Stop T3560 timer
+2026-09-20T10:08:22.443548297+09:00 [INFO][AMF][Gmm] Handle event[SecurityMode Success], transition from [SecurityMode] to [ContextSetup]
+2026-09-20T10:08:22.443561235+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Handle InitialRegistration
+2026-09-20T10:08:22.444721942+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.445803675+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=AMF&supi=imsi-001010000000000&target-nf-type=UDM |  |
+2026-09-20T10:08:22.447126198+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.453168404+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.454273970+09:00 [INFO][UDM][Consumer] TwoLayerPathHandlerFunc,  imsi-001010000000000 nssai
+2026-09-20T10:08:22.454483786+09:00 [INFO][UDM][SDM] Handle GetNssai
+2026-09-20T10:08:22.455779150+09:00 [INFO][UDR][DataRepo] QueryAmDataProcedure: ueId: imsi-001010000000000, servingPlmnId: 00101
+2026-09-20T10:08:22.456494069+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/subscription-data/imsi-001010000000000/00101/provisioned-data/am-data?supported-features= |  |
+2026-09-20T10:08:22.457628734+09:00 [INFO][UDM][GIN] | 200 |       127.0.0.1 | GET     | /nudm-sdm/v2/imsi-001010000000000/nssai?plmn-id=%7B%22mcc%22%3A%22001%22%2C%22mnc%22%3A%2201%22%7D |  |
+2026-09-20T10:08:22.458203995+09:00 [INFO][AMF][Gmm] RequestedNssai: &{SNSSAIs:[{SST:1 MappedHPLMNSST:0 SD:010203 MappedHPLMNSD:}]}
+2026-09-20T10:08:22.458339291+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] RequestedNssai - ServingSnssai: &{Sst:1 Sd:010203}, HomeSnssai: <nil>
+2026-09-20T10:08:22.459328201+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.460535784+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=AMF&supi=imsi-001010000000000&target-nf-type=UDM |  |
+2026-09-20T10:08:22.461163211+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.465114958+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.466681929+09:00 [INFO][UDM][UECM] Handle RegistrationAmf3gppAccess
+2026-09-20T10:08:22.466775399+09:00 [INFO][UDM][UECM] UEID: imsi-001010000000000
+2026-09-20T10:08:22.468883588+09:00 [INFO][UDR][GIN] | 204 |       127.0.0.1 | PUT     | /nudr-dr/v2/subscription-data/imsi-001010000000000/context-data/amf-3gpp-access |  |
+2026-09-20T10:08:22.469232071+09:00 [INFO][UDM][GIN] | 201 |       127.0.0.1 | PUT     | /nudm-uecm/v1/imsi-001010000000000/registrations/amf-3gpp-access |  |
+2026-09-20T10:08:22.469850588+09:00 [INFO][UDM][Consumer] TwoLayerPathHandlerFunc,  imsi-001010000000000 am-data
+2026-09-20T10:08:22.469890124+09:00 [INFO][UDM][SDM] Handle GetAmData
+2026-09-20T10:08:22.470397069+09:00 [INFO][UDR][DataRepo] QueryAmDataProcedure: ueId: imsi-001010000000000, servingPlmnId: 00101
+2026-09-20T10:08:22.470908861+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/subscription-data/imsi-001010000000000/00101/provisioned-data/am-data?supported-features= |  |
+2026-09-20T10:08:22.471255344+09:00 [INFO][UDM][GIN] | 200 |       127.0.0.1 | GET     | /nudm-sdm/v2/imsi-001010000000000/am-data?plmn-id=%7B%22mcc%22%3A%22001%22%2C%22mnc%22%3A%2201%22%7D |  |
+2026-09-20T10:08:22.473452338+09:00 [INFO][UDM][Consumer] TwoLayerPathHandlerFunc,  imsi-001010000000000 smf-select-data
+2026-09-20T10:08:22.473488783+09:00 [INFO][UDM][SDM] Handle GetSmfSelectData
+2026-09-20T10:08:22.474890495+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/subscription-data/imsi-001010000000000/00101/provisioned-data/smf-selection-subscription-data?supported-features= |  |
+2026-09-20T10:08:22.475364739+09:00 [INFO][UDM][GIN] | 200 |       127.0.0.1 | GET     | /nudm-sdm/v2/imsi-001010000000000/smf-select-data?plmn-id=%7B%22mcc%22%3A%22001%22%2C%22mnc%22%3A%2201%22%7D |  |
+2026-09-20T10:08:22.476107863+09:00 [INFO][UDM][Consumer] TwoLayerPathHandlerFunc,  imsi-001010000000000 ue-context-in-smf-data
+2026-09-20T10:08:22.476273618+09:00 [INFO][UDM][SDM] Handle GetUeContextInSmfData
+2026-09-20T10:08:22.477830754+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/subscription-data/imsi-001010000000000/context-data/smf-registrations?supported-features= |  |
+2026-09-20T10:08:22.478250849+09:00 [INFO][UDM][GIN] | 200 |       127.0.0.1 | GET     | /nudm-sdm/v2/imsi-001010000000000/ue-context-in-smf-data |  |
+2026-09-20T10:08:22.479470963+09:00 [INFO][UDM][Consumer] TwoLayerPathHandlerFunc,  imsi-001010000000000 sdm-subscriptions
+2026-09-20T10:08:22.480007536+09:00 [INFO][UDM][SDM] Handle Subscribe
+2026-09-20T10:08:22.482419594+09:00 [INFO][UDR][GIN] | 201 |       127.0.0.1 | POST    | /nudr-dr/v2/subscription-data/imsi-001010000000000/context-data/sdm-subscriptions |  |
+2026-09-20T10:08:22.482752781+09:00 [INFO][UDM][GIN] | 201 |       127.0.0.1 | POST    | /nudm-sdm/v2/imsi-001010000000000/sdm-subscriptions |  |
+2026-09-20T10:08:22.483888150+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.485418148+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?preferred-locality=area1&requester-nf-type=AMF&supi=imsi-001010000000000&target-nf-type=PCF |  |
+2026-09-20T10:08:22.486013591+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.490123179+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.492472274+09:00 [INFO][PCF][AmPol] Handle AM Policy Create Request
+2026-09-20T10:08:22.493301555+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.497892959+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.500630470+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.501539911+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=PCF&target-nf-type=UDR |  |
+2026-09-20T10:08:22.502407054+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.506110550+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.507509572+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/policy-data/ues/imsi-001010000000000/am-data |  |
+2026-09-20T10:08:22.508747657+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.510030355+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?guami=%7B%22plmnId%22%3A%7B%22mcc%22%3A%22001%22%2C%22mnc%22%3A%2201%22%7D%2C%22amfId%22%3A%22cafe00%22%7D&requester-nf-type=PCF&target-nf-type=AMF |  |
+2026-09-20T10:08:22.510732956+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.514996333+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.516521924+09:00 [INFO][AMF][Comm] Handle AMF Status Change Subscribe Request
+2026-09-20T10:08:22.516720488+09:00 [INFO][AMF][Comm] new AMF Status Subscription[1]
+2026-09-20T10:08:22.516879838+09:00 [INFO][AMF][GIN] | 201 |       127.0.0.1 | POST    | /namf-comm/v1/subscriptions |  |
+2026-09-20T10:08:22.517324246+09:00 [INFO][PCF][GIN] | 201 |       127.0.0.1 | POST    | /npcf-am-policy-control/v1/policies |  |
+2026-09-20T10:08:22.517812958+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Send Registration Accept
+2026-09-20T10:08:22.517869662+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:46060] Send Initial Context Setup Request
+2026-09-20T10:08:22.517959730+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Start T3550 timer
+2026-09-20T10:08:22.720556942+09:00 [INFO][AMF][Gmm] Handle event[Gmm Message], transition from [ContextSetup] to [ContextSetup]
+2026-09-20T10:08:22.720575920+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Handle Registration Complete
+2026-09-20T10:08:22.720583131+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Stop T3550 timer
+2026-09-20T10:08:22.720640020+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Send Configuration Update Command
+2026-09-20T10:08:22.720652000+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:46060] Send Downlink Nas Transport
+2026-09-20T10:08:22.720691993+09:00 [INFO][AMF][Gmm] Handle event[ContextSetup Success], transition from [ContextSetup] to [Registered]
+2026-09-20T10:08:22.720733186+09:00 [INFO][AMF][Gmm] Handle event[Gmm Message], transition from [Registered] to [Registered]
+2026-09-20T10:08:22.720740414+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Handle UL NAS Transport
+2026-09-20T10:08:22.720746208+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Transport 5GSM Message to SMF
+2026-09-20T10:08:22.720755294+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] Select SMF [snssai: {Sst:1 Sd:010203}, dnn: internet]
+2026-09-20T10:08:22.721673665+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.722767965+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=AMF&target-nf-type=NSSF |  |
+2026-09-20T10:08:22.723368806+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.727141567+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.728880310+09:00 [INFO][NSSF][NsSel] Handle NSSelectionGet
+2026-09-20T10:08:22.729267464+09:00 [WARN][NSSF][Util] No TA {"plmnId":{"mcc":"001","mnc":"01"},"tac":"000001"} in NSSF configuration
+2026-09-20T10:08:22.729718665+09:00 [INFO][NSSF][GIN] | 200 |       127.0.0.1 | GET     | /nnssf-nsselection/v2/network-slice-information?nf-id=ad3a6bf5-c7eb-4c6d-a9db-f8a267ef1e38&nf-type=AMF&slice-info-request-for-pdu-session=%7B%22sNssai%22%3A%7B%22sst%22%3A1%2C%22sd%22%3A%22010203%22%7D%2C%22roamingIndication%22%3A%22NON_ROAMING%22%7D&tai=%7B%22plmnId%22%3A%7B%22mcc%22%3A%22001%22%2C%22mnc%22%3A%2201%22%7D%2C%22tac%22%3A%22000001%22%7D |  |
+2026-09-20T10:08:22.730259757+09:00 [WARN][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] nsiInformation is still nil, use default NRF[http://127.0.0.10:8000]
+2026-09-20T10:08:22.731057324+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.732455554+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?dnn=internet&preferred-locality=area1&requester-nf-type=AMF&service-names=nsmf-pdusession&snssais=%5B%7B%22sst%22%3A1%2C%22sd%22%3A%22010203%22%7D%5D&target-nf-type=SMF&target-plmn-list=%5B%7B%22mcc%22%3A%22001%22%2C%22mnc%22%3A%2201%22%7D%5D |  |
+2026-09-20T10:08:22.733058630+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.737421875+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.741746750+09:00 [INFO][SMF][PduSess] Receive Create SM Context Request
+2026-09-20T10:08:22.742781394+09:00 [INFO][SMF][PduSess] In HandlePDUSessionSMContextCreate
+2026-09-20T10:08:22.743006737+09:00 [INFO][SMF][CTX] UrrPeriod: 30s
+2026-09-20T10:08:22.743025769+09:00 [INFO][SMF][CTX] UrrThreshold: 500000
+2026-09-20T10:08:22.743703612+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.747078149+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.747838675+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.748655319+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=SMF&target-nf-type=UDM |  |
+2026-09-20T10:08:22.749373551+09:00 [INFO][SMF][PduSess][pdu_session_id:1][supi:imsi-001010000000000] Send NF Discovery Serving UDM Successfully
+2026-09-20T10:08:22.749724447+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.753415762+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.754580254+09:00 [INFO][UDM][Consumer] TwoLayerPathHandlerFunc,  imsi-001010000000000 sm-data
+2026-09-20T10:08:22.754781619+09:00 [INFO][UDM][SDM] Handle GetSmData
+2026-09-20T10:08:22.754868751+09:00 [INFO][UDM][SDM] getSmDataProcedure: SUPI[imsi-001010000000000] PLMNID[00101] DNN[internet] SNssai[{"sst":1,"sd":"010203"}]
+2026-09-20T10:08:22.756893106+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/subscription-data/imsi-001010000000000/00101/provisioned-data/sm-data?single-nssai=%7B%22sst%22%3A1%2C%22sd%22%3A%22010203%22%7D |  |
+2026-09-20T10:08:22.757660040+09:00 [INFO][UDM][GIN] | 200 |       127.0.0.1 | GET     | /nudm-sdm/v2/imsi-001010000000000/sm-data?dnn=internet&plmn-id=%7B%22mcc%22%3A%22001%22%2C%22mnc%22%3A%2201%22%7D&single-nssai=%7B%22sst%22%3A1%2C%22sd%22%3A%22010203%22%7D |  |
+2026-09-20T10:08:22.758809375+09:00 [INFO][SMF][GSM] In HandlePDUSessionEstablishmentRequest
+2026-09-20T10:08:22.758943843+09:00 [INFO][SMF][GSM] Protocol Configuration Options
+2026-09-20T10:08:22.759136726+09:00 [INFO][SMF][GSM] &{IPv4LinkMTUReq:false DNSV4Req:true DNSV6Req:false P_CSCF_IPv4AddrReq:false UEStatus3GPPPSDataOff:0}
+2026-09-20T10:08:22.760240107+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.761551941+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=SMF&target-nf-instance-id=ad3a6bf5-c7eb-4c6d-a9db-f8a267ef1e38&target-nf-type=AMF |  |
+2026-09-20T10:08:22.761996100+09:00 [INFO][SMF][Consumer] SendNFDiscoveryServingAMF ok
+2026-09-20T10:08:22.762077424+09:00 [INFO][SMF][CTX] Allocated UE IP address: 10.60.0.1
+2026-09-20T10:08:22.762102537+09:00 [INFO][SMF][CTX] Selected UPF: UPF
+2026-09-20T10:08:22.762113819+09:00 [INFO][SMF][PduSess][pdu_session_id:1][supi:imsi-001010000000000] Allocated PDUAdress[10.60.0.1]
+2026-09-20T10:08:22.762496397+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.763085094+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=SMF&target-nf-type=BSF |  |
+2026-09-20T10:08:22.763835127+09:00 [INFO][BSF][Proc] Handle GetPCFBindings
+[GIN] 2026/09/20 - 10:08:22 | 200 |     597.282µs |       127.0.0.1 | GET      "/nbsf-management/v1/pcfBindings?dnn=internet&snssai=%7B%22sst%22%3A1%2C%22sd%22%3A%22010203%22%7D&supi=imsi-001010000000000"
+2026-09-20T10:08:22.764627135+09:00 [INFO][SMF][Consumer] Found existing PCF binding for SUPI: imsi-001010000000000, DNN: internet
+2026-09-20T10:08:22.764648976+09:00 [INFO][SMF][Consumer] Using existing PCF from BSF binding: cdef9a0d-51a1-4b1e-bad1-381ff2f7f3f9
+2026-09-20T10:08:22.765329016+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.765936169+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=SMF&target-nf-instance-id=cdef9a0d-51a1-4b1e-bad1-381ff2f7f3f9&target-nf-type=PCF |  |
+2026-09-20T10:08:22.766301709+09:00 [WARN][SMF][Consumer] Failed to discover PCF cdef9a0d-51a1-4b1e-bad1-381ff2f7f3f9 from NRF, falling back to general PCF selection: <nil>
+2026-09-20T10:08:22.766665625+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.767774071+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?preferred-locality=area1&requester-nf-type=SMF&target-nf-type=PCF |  |
+2026-09-20T10:08:22.768381879+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.772403316+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.774087162+09:00 [INFO][PCF][SMpolicy] Handle CreateSmPolicy
+2026-09-20T10:08:22.776144786+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/policy-data/ues/imsi-001010000000000/sm-data?dnn=internet&snssai=%7B%22sst%22%3A1%2C%22sd%22%3A%22010203%22%7D |  |
+2026-09-20T10:08:22.780748127+09:00 [INFO][UDR][GIN] | 200 |       127.0.0.1 | GET     | /nudr-dr/v2/application-data/influenceData?dnns=internet&snssais=%5B%7B%22sst%22%3A1%2C%22sd%22%3A%22010203%22%7D%5D&supis=imsi-001010000000000 |  |
+2026-09-20T10:08:22.781176354+09:00 [INFO][PCF][SMpolicy] Matched [0] trafficInfluDatas from UDR
+2026-09-20T10:08:22.782559859+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.785404311+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.786141229+09:00 [INFO][NRF][NFM] Handle GetNFInstanceRequest
+2026-09-20T10:08:22.786810009+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-nfm/v1/nf-instances/f456042a-0f9b-4c81-8ba6-6c67443db632 |  |
+2026-09-20T10:08:22.787215403+09:00 [INFO][UDR][GIN] | 201 |       127.0.0.1 | POST    | /nudr-dr/v2/application-data/influenceData/subs-to-notify |  |
+2026-09-20T10:08:22.788180629+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.789253651+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=PCF&target-nf-type=BSF |  |
+2026-09-20T10:08:22.791549820+09:00 [INFO][BSF][Proc] Handle CreatePCFBinding
+[GIN] 2026/09/20 - 10:08:22 | 403 |     333.994µs |       127.0.0.1 | POST     "/nbsf-management/v1/pcfBindings"
+2026-09-20T10:08:22.792062783+09:00 [WARN][PCF][SMpolicy] Failed to register PCF binding in BSF: unexpected response status: 403
+2026-09-20T10:08:22.792669204+09:00 [INFO][PCF][GIN] | 201 |       127.0.0.1 | POST    | /npcf-smpolicycontrol/v1/sm-policies |  |
+2026-09-20T10:08:22.793835807+09:00 [INFO][SMF][PduSess] CHF Selection for SMContext SUPI[imsi-001010000000000] PDUSessionID[1]
+2026-09-20T10:08:22.795781289+09:00 [INFO][NRF][DISC] Handle NFDiscoveryRequest
+2026-09-20T10:08:22.796691729+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | GET     | /nnrf-disc/v1/nf-instances?requester-nf-type=SMF&target-nf-type=CHF |  |
+2026-09-20T10:08:22.797278682+09:00 [INFO][SMF][Charging] Handle SendConvergedChargingRequest
+2026-09-20T10:08:22.797690610+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.801355424+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.806832236+09:00 [INFO][CHF][ChargingPost] HandleChargingdataInitial
+2026-09-20T10:08:22.807059381+09:00 [INFO][CHF][ChargingPost] SMF charging event
+2026-09-20T10:08:22.807295360+09:00 [ERRO][CHF][ChargingPost] Charging gateway fail to send CDR to billing domain dial tcp 127.0.0.1:2121: connect: connection refused
+2026-09-20T10:08:22.807413843+09:00 [INFO][CHF][ChargingPost] Open CDR for UE imsi-001010000000000
+2026-09-20T10:08:22.807432953+09:00 [INFO][CHF][ChargingPost] NewChfUe imsi-001010000000000
+2026-09-20T10:08:22.807878615+09:00 [INFO][CHF][GIN] | 201 |       127.0.0.1 | POST    | /nchf-convergedcharging/v3/chargingdata |  |
+2026-09-20T10:08:22.808446979+09:00 [INFO][SMF][Charging] Send Charging Data Request[Init] successfully
+2026-09-20T10:08:22.808614281+09:00 [INFO][SMF][PduSess][pdu_session_id:1][supi:imsi-001010000000000] Install PCCRule[PccRuleId-1]
+2026-09-20T10:08:22.809097501+09:00 [INFO][SMF][Charging] [AddChargingRules] ChargingInfo bind URR[7] -> RG=1 UPF=bdc98394-3925-4178-aedb-0661f7090b69 level=0 method=OFFLINE_CHARGING
+2026-09-20T10:08:22.811646835+09:00 [INFO][SMF][PduSess][pdu_session_id:1][supi:imsi-001010000000000] No srcTcData and tgtTcData. Nothing to do
+2026-09-20T10:08:22.811836702+09:00 [INFO][SMF][PduSess][pdu_session_id:1][supi:imsi-001010000000000] Has default path
+2026-09-20T10:08:22.814387182+09:00 [INFO][SMF][PduSess] Sending PFCP Session Establishment Request
+2026-09-20T10:08:22.814561453+09:00 [INFO][SMF][PduSess][pdu_session_id:1][supi:imsi-001010000000000] [BuildEstReq] UPF=bdc98394-3925-4178-aedb-0661f7090b69 urrList=6 unique_urrs=3
+2026-09-20T10:08:22.816089552+09:00 [INFO][SMF][PduSess] Received PFCP Session Establishment Accepted Response
+2026-09-20T10:08:22.816836087+09:00 [INFO][NRF][Token] In HTTPAccessTokenRequest
+2026-09-20T10:08:22.815945985+09:00 [INFO][UDM][Consumer] TwoLayerPathHandlerFunc,  imsi-001010000000000 sdm-subscriptions
+2026-09-20T10:08:22.817278206+09:00 [INFO][UDM][SDM] Handle Subscribe
+2026-09-20T10:08:22.819482545+09:00 [INFO][UDR][GIN] | 201 |       127.0.0.1 | POST    | /nudr-dr/v2/subscription-data/imsi-001010000000000/context-data/sdm-subscriptions |  |
+2026-09-20T10:08:22.821217376+09:00 [INFO][UDM][GIN] | 201 |       127.0.0.1 | POST    | /nudm-sdm/v2/imsi-001010000000000/sdm-subscriptions |  |
+2026-09-20T10:08:22.822237292+09:00 [INFO][SMF][PduSess] SDM Subscription Successful UE: imsi-001010000000000 SubscriptionId: 2
+2026-09-20T10:08:22.822360042+09:00 [INFO][SMF][GIN] | 201 |       127.0.0.1 | POST    | /nsmf-pdusession/v1/sm-contexts |  |
+2026-09-20T10:08:22.822983690+09:00 [INFO][AMF][Gmm][amf_ue_ngap_id:RU:1,AU:1(3GPP)][supi:SUPI:imsi-001010000000000] create smContext[pduSessionID: 1] Success
+2026-09-20T10:08:22.825120326+09:00 [INFO][NRF][GIN] | 200 |       127.0.0.1 | POST    | /oauth2/token |  |
+2026-09-20T10:08:22.826762348+09:00 [INFO][AMF][Producer] Handle N1N2 Message Transfer Request
+2026-09-20T10:08:22.827073033+09:00 [INFO][AMF][Ngap][amf_ue_ngap_id:RU:1,AU:1(3GPP)][ran_addr:192.168.0.131:46060] Send PDU Session Resource Setup Request
+2026-09-20T10:08:22.827188192+09:00 [INFO][AMF][GIN] | 200 |       127.0.0.1 | POST    | /namf-comm/v1/ue-contexts/imsi-001010000000000/n1-n2-messages |  |
+2026-09-20T10:08:22.831420986+09:00 [INFO][SMF][PduSess] Receive Update SM Context Request
+2026-09-20T10:08:22.831746079+09:00 [INFO][SMF][PduSess][pdu_session_id:1][supi:imsi-001010000000000] [BuildModReq] UPF=bdc98394-3925-4178-aedb-0661f7090b69 urrList=0 unique_urrs=0
+2026-09-20T10:08:22.890321431+09:00 [INFO][SMF][PduSess] Received PFCP Session Modification Accepted Response from AN UPF
+2026-09-20T10:08:22.890628562+09:00 [INFO][SMF][GIN] | 200 |       127.0.0.1 | POST    | /nsmf-pdusession/v1/sm-contexts/urn:uuid:6652b5cd-b049-442e-a7de-cadd2cfdd747/modify |  |
 ```
 The PDU session establishment log of OAI-CN5G-UPF is as follows.
 ```
-[2026-01-23 22:59:19.790] [upf_n4 ] [info] handle_receive(1105 bytes)
-[2026-01-23 22:59:19.791] [upf_app] [info] Received N4_SESSION_ESTABLISHMENT_REQUEST seid 0x0 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::add(far) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::add(far) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::add(far) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::add(far) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::add(qer) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] TEID received from CP
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::set(fteid) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::get(fteid) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::add(pdr) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::add(qer) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::add(pdr) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::add(qer) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] TEID received from CP
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::set(fteid) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::get(fteid) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::add(pdr) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::add(qer) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_n4 ] [info] pfcp_session::add(pdr) seid 0x1 
-[2026-01-23 22:59:19.791] [upf_app] [info] Establish datapath: create(pdr(s) & far(s))
-[2026-01-23 22:59:19.791] [upf_app] [info] SEID 0x1: Processing 4 PDRs (Uplink: 2, Downlink: 2) in precedence order
-[2026-01-23 22:59:19.791] [upf_app] [warning] FTEID is missing for PDR 4. CH bit: Not Set
-[2026-01-23 22:59:19.791] [upf_app] [warning] FTEID is missing for PDR 2. CH bit: Not Set
-[2026-01-23 22:59:19.791] [upf_app] [info] SEID 0x1: Loaded 4 PDRs into BPF map in precedence order
-[2026-01-23 22:59:19.791] [upf_app] [info]   >> Writing to BPF m_session_pdrs map with key SEID=1 (0x1)
-[2026-01-23 22:59:19.834] [upf_n4 ] [info] handle_receive(442 bytes)
-[2026-01-23 22:59:19.834] [upf_app] [info] Received N4_SESSION_MODIFICATION_REQUEST seid 0x1 
-[2026-01-23 22:59:19.834] [pfcp_switch] [warning] TODO check carrefully update fseid in PFCP_SESSION_MODIFICATION_REQUEST
-[2026-01-23 22:59:19.834] [upf_app] [info] Modify datapath
-[2026-01-23 22:59:19.834] [upf_app] [info] BPFProgram 2 is created!!!
-[2026-01-23 22:59:19.834] [upf_app] [info] Initializing QER TC BPF program...
-[2026-01-23 22:59:19.835] [upf_app] [info] UDP_INTERFACE = ens22
-[2026-01-23 22:59:19.835] [upf_app] [info] GTP_INTERFACE = ens20
-[2026-01-23 22:59:19.843] [upf_app] [info] Create Root qdisc on interface ens20 with Default Class: 65535, and r2q: 40
-[2026-01-23 22:59:19.846] [upf_app] [info] Create PDU Session Class 1:1 with rate: -1000
-Warning: sch_htb: quantum of class 10001 is big. Consider r2q change.
-[2026-01-23 22:59:19.848] [upf_app] [info] Create QoS Flow Class 1:38 for PDU Session Parent 1:1
-Warning: sch_htb: quantum of class 10026 is small. Consider r2q change.
-[2026-01-23 22:59:19.851] [upf_app] [info] Create QoS Flow Class 1:75 for PDU Session Parent 1:1
-Warning: sch_htb: quantum of class 1004B is small. Consider r2q change.
-[2026-01-23 22:59:19.856] [upf_app] [info] Attach Section tc_filter_traffic to gtp interface
-[2026-01-23 22:59:19.859] [upf_app] [info] Attach Section tc_redirect to udp interface
+[2026-09-20 10:08:22.826] [upf_n4 ] [info] handle_receive(626 bytes)
+[2026-09-20 10:08:22.826] [upf_app] [info] 
+[2026-09-20 10:08:22.826] [upf_app] [info] ╔═════════════════════════════════════════════════════════════════════════════╗
+[2026-09-20 10:08:22.826] [upf_app] [info] │             Received N4_SESSION_ESTABLISHMENT_REQUEST seid 0x0              │
+[2026-09-20 10:08:22.826] [upf_app] [info] ╚═════════════════════════════════════════════════════════════════════════════╝
+[2026-09-20 10:08:22.826] [upf_n4 ] [info] pfcp_session::add(far) seid 0x1 FAR=1
+[2026-09-20 10:08:22.826] [upf_n4 ] [info]   └─ Adding new FAR 1 to session 0x1
+[2026-09-20 10:08:22.826] [upf_n4 ] [info] pfcp_session::add(far) seid 0x1 FAR=2
+[2026-09-20 10:08:22.826] [upf_n4 ] [info]   └─ Adding new FAR 2 to session 0x1
+[2026-09-20 10:08:22.826] [upf_n4 ] [info] pfcp_session::add(qer) seid 0x1 QER=1
+[2026-09-20 10:08:22.826] [upf_n4 ] [info]   └─ Adding new QER 1 to session 0x1
+[2026-09-20 10:08:22.826] [upf_n4 ] [info] TEID 0x2 received from CP
+[2026-09-20 10:08:22.826] [upf_n4 ] [info] pfcp_session::set(fteid) seid 0x1 
+[2026-09-20 10:08:22.826] [upf_n4 ] [info] pfcp_session::get(fteid) seid 0x1 
+[2026-09-20 10:08:22.826] [upf_n4 ] [info] pfcp_session::add(pdr) seid 0x1 PDR=1
+[2026-09-20 10:08:22.826] [upf_n4 ] [info]   └─ Adding new PDR 1 to session 0x1
+[2026-09-20 10:08:22.826] [upf_n4 ] [info] pfcp_session::add(qer) seid 0x1 QER=1
+[2026-09-20 10:08:22.826] [upf_n4 ] [warning]   └─ Skipping duplicate QER 1 (QFI 1) in session 0x1 - already exists
+[2026-09-20 10:08:22.826] [upf_n4 ] [info] pfcp_session::add(pdr) seid 0x1 PDR=2
+[2026-09-20 10:08:22.826] [upf_n4 ] [info]   └─ Adding new PDR 2 to session 0x1
+[2026-09-20 10:08:22.826] [upf_app] [info] Establish datapath: create(pdr(s), far(s), qer(s), urr(s), bar(s), mar(s))
+[2026-09-20 10:08:22.826] [upf_app] [info] [eBPF] Create Pipeline - Creating pipeline for session 0x1
+[2026-09-20 10:08:22.826] [upf_app] [warning] F-TEID missing for PDR 2 (CH bit: Not Set)
+[2026-09-20 10:08:22.826] [upf_app] [info] Pipeline created for session 0x1 with 2 PDRs [type = IP, rules = 0x1]
+[2026-09-20 10:08:22.826] [upf_app] [info] [N4] Create Session: seid 0x1 - eBPF data-path pipeline created successfully
+[2026-09-20 10:08:22.843] [upf_n4 ] [info] handle_receive(228 bytes)
+[2026-09-20 10:08:22.843] [upf_app] [info] 
+[2026-09-20 10:08:22.843] [upf_app] [info] ╔═════════════════════════════════════════════════════════════════════════════╗
+[2026-09-20 10:08:22.843] [upf_app] [info] │             Received N4_SESSION_MODIFICATION_REQUEST seid 0x1               │
+[2026-09-20 10:08:22.843] [upf_app] [info] ╚═════════════════════════════════════════════════════════════════════════════╝
+[2026-09-20 10:08:22.843] [pfcp_switch] [warning] TODO check carefully update fseid in PFCP_SESSION_MODIFICATION_REQUEST
+[2026-09-20 10:08:22.843] [upf_n4 ] [info] pfcp_session::update(pdr) seid 0x1 PDR=2
+[2026-09-20 10:08:22.843] [upf_n4 ] [info]   └─ Updating PDR 2 in session 0x1
+[2026-09-20 10:08:22.843] [upf_n4 ] [info] pfcp_session::update(far) seid 0x1 FAR=2
+[2026-09-20 10:08:22.843] [upf_n4 ] [info]   └─ Updating FAR 2 in session 0x1
+[2026-09-20 10:08:22.843] [upf_app] [info] Modify datapath
+[2026-09-20 10:08:22.843] [upf_app] [info] [eBPF] Modify Pipeline - Updating pipeline for session 0x1
+[2026-09-20 10:08:22.844] [upf_app] [info] 
+[2026-09-20 10:08:22.844] [upf_app] [info]   ┌───────────────────────────────────────────────────┐
+[2026-09-20 10:08:22.844] [upf_app] [info]   │            QoS ENFORCEMENT SETUP                  │
+[2026-09-20 10:08:22.844] [upf_app] [info]   │       Session: 0x1, Interface: ens20              │
+[2026-09-20 10:08:22.844] [upf_app] [info]   └───────────────────────────────────────────────────┘
+[2026-09-20 10:08:22.844] [upf_app] [info]   ┌─ N6 Interface (Non-GTP): ens22
+[2026-09-20 10:08:22.844] [upf_app] [info]   └─ N3 Interface (GTP):     ens20
+[2026-09-20 10:08:22.848] [upf_app] [info]   ┌─ Creating Root HTB Qdisc on ens20
+[2026-09-20 10:08:22.848] [upf_app] [info]   │  • Default Class: 65535
+[2026-09-20 10:08:22.848] [upf_app] [info]   │  • r2q Parameter: 1000
+[2026-09-20 10:08:22.851] [upf_app] [info]   └─ ✓ Root qdisc created successfully on interface: ens20
+[2026-09-20 10:08:22.851] [upf_app] [info]   ┌─ Creating PDU Session Class 1:1
+[2026-09-20 10:08:22.851] [upf_app] [info]   │  • Session Rate: 4,294,966,296 kbps
+[2026-09-20 10:08:22.853] [upf_app] [info]   └─ ✓ PDU session class  1:1 created successfully
+[2026-09-20 10:08:22.853] [upf_app] [warning] QoS Flow missing GBR: set it to 0.8 x MBR
+[2026-09-20 10:08:22.853] [upf_app] [info]   ┌─ Createing QoS Flow Class 1:38 for PDU Session Parent 1:1
+[2026-09-20 10:08:22.853] [upf_app] [info]   │  • QoS Flow Rate (GBR): 800,000 kbps
+[2026-09-20 10:08:22.853] [upf_app] [info]   │  • QoS Flow Ceil (MBR): 1,000,000 kbps
+[2026-09-20 10:08:22.855] [upf_app] [info]   └─ ✓ QoS Flow class  1:38 created successfully for QER 1
+[2026-09-20 10:08:22.859] [upf_app] [info] Attach Section tc_filter_traffic to gtp interface
+[2026-09-20 10:08:22.862] [upf_app] [info] Attach Section tc_redirect to udp interface
 libbpf: Kernel error message: Exclusivity flag on, cannot modify
-[2026-01-23 22:59:19.860] [upf_app] [info] Success: TC-BPF hook tc_redirect_traffic already exists for interface ens22 (Ignore: libbpf: Kernel error message))
-[2026-01-23 22:59:19.860] [upf_app] [info] BPF program tc_redirect_traffic successfully attached to ens22 interface
-[2026-01-23 22:59:19.860] [upf_app] [info] SEID 0x1: Modifying 4 PDRs (Uplink: 2, Downlink: 2) in precedence order
-[2026-01-23 22:59:19.861] [upf_app] [info] SEID 0x1: Updated 4 PDRs in BPF map in precedence order
-[2026-01-23 22:59:19.861] [upf_app] [info]   >> Writing to BPF m_session_pdrs map with key SEID=1 (0x1)
-[2026-01-23 22:59:19.861] [upf_app] [info] BPFProgram 3 is created!!!
-[2026-01-23 22:59:19.861] [upf_app] [info] Initializing QER TC BPF program...
-[2026-01-23 22:59:19.866] [upf_app] [info] UDP_INTERFACE = ens22
-[2026-01-23 22:59:19.866] [upf_app] [info] GTP_INTERFACE = ens20
-[2026-01-23 22:59:19.904] [upf_app] [info] Create PDU Session Class 1:1 with rate: -1000
+[2026-09-20 10:08:22.862] [upf_app] [info] Success: [QERTCProgram] TC-BPF hook tc_redirect_traffic already exists for interface ens22 (Ignore: libbpf: Kernel error message))
+[2026-09-20 10:08:22.862] [upf_app] [info] [QERTCProgram] TC-BPF 'tc_redirect_traffic' attached to ens22 (ingress, ifindex=6)
+[2026-09-20 10:08:22.862] [upf_app] [info] 
+[2026-09-20 10:08:22.862] [upf_app] [info]   ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+[2026-09-20 10:08:22.862] [upf_app] [info]   │                                      QoS FLOWS - Session 0x1                                             │
+[2026-09-20 10:08:22.862] [upf_app] [info]   ├──────┬─────┬──────────────┬────────────┬────────────┬────────────────────────────────────────────────────┤
+[2026-09-20 10:08:22.862] [upf_app] [info]   │ QER  │ QFI │    Class     │ GBR (kbps) │ MBR (kbps) │               Flow Description                     │
+[2026-09-20 10:08:22.862] [upf_app] [info]   ├──────┼─────┼──────────────┼────────────┼────────────┼────────────────────────────────────────────────────┤
+[2026-09-20 10:08:22.862] [upf_app] [info]   │ 1    │ 1   │ 1:38         │ 800,000    │ 1,000,000  │ permit out ip from any to assigned                 │
+[2026-09-20 10:08:22.862] [upf_app] [info]   └──────┴─────┴──────────────┴────────────┴────────────┴────────────────────────────────────────────────────┘
+[2026-09-20 10:08:22.862] [upf_app] [info] 
+[2026-09-20 10:08:22.862] [upf_app] [info] 
+[2026-09-20 10:08:22.862] [upf_app] [info]   ┌───────────────────────────────────────────────────┐
+[2026-09-20 10:08:22.862] [upf_app] [info]   │           QoS ENFORCEMENT COMPLETED               │
+[2026-09-20 10:08:22.862] [upf_app] [info]   │      Session 0x1: 1 QoS Flow(s) configured        │
+[2026-09-20 10:08:22.862] [upf_app] [info]   └───────────────────────────────────────────────────┘
+[2026-09-20 10:08:22.862] [upf_app] [info] 
+[2026-09-20 10:08:22.864] [upf_app] [info] [eBPF] Modify Pipeline - Pipeline modified for session 0x1 with 2 PDRs (1 uplink TEIDs, 1 downlink TEIDs)
+[2026-09-20 10:08:22.864] [upf_app] [info] [eBPF] Modify Pipeline - Updating pipeline for session 0x1
+[2026-09-20 10:08:22.864] [upf_app] [info] 
+[2026-09-20 10:08:22.864] [upf_app] [info]   ┌───────────────────────────────────────────────────┐
+[2026-09-20 10:08:22.864] [upf_app] [info]   │            QoS ENFORCEMENT SETUP                  │
+[2026-09-20 10:08:22.864] [upf_app] [info]   │       Session: 0x1, Interface: ens20              │
+[2026-09-20 10:08:22.864] [upf_app] [info]   └───────────────────────────────────────────────────┘
+[2026-09-20 10:08:22.864] [upf_app] [info]   ┌─ N6 Interface (Non-GTP): ens22
+[2026-09-20 10:08:22.864] [upf_app] [info]   └─ N3 Interface (GTP):     ens20
+[2026-09-20 10:08:22.872] [upf_app] [info]   ┌─ Creating PDU Session Class 1:1
+[2026-09-20 10:08:22.872] [upf_app] [info]   │  • Session Rate: 4,294,966,296 kbps
 RTNETLINK answers: File exists
-[2026-01-23 22:59:19.915] [upf_app] [error] Failed command: tc class add dev ens20 parent 1: classid 1:1 htb rate 4294966296kbit
-[2026-01-23 22:59:19.915] [upf_app] [info] Create QoS Flow Class 1:38 for PDU Session Parent 1:1
+[2026-09-20 10:08:22.879] [upf_app] [error]   └─ ✗ Failed to create PDU session class 1:1
+[2026-09-20 10:08:22.879] [upf_app] [warning] QoS Flow missing GBR: set it to 0.8 x MBR
+[2026-09-20 10:08:22.879] [upf_app] [info]   ┌─ Createing QoS Flow Class 1:38 for PDU Session Parent 1:1
+[2026-09-20 10:08:22.879] [upf_app] [info]   │  • QoS Flow Rate (GBR): 800,000 kbps
+[2026-09-20 10:08:22.879] [upf_app] [info]   │  • QoS Flow Ceil (MBR): 1,000,000 kbps
 RTNETLINK answers: File exists
-[2026-01-23 22:59:19.918] [upf_app] [error] Failed command: tc class add dev ens20 parent 1:1 classid 1:26 htb rate 1kbit ceil 1000000kbit
-[2026-01-23 22:59:19.918] [upf_app] [info] Create QoS Flow Class 1:75 for PDU Session Parent 1:1
-RTNETLINK answers: File exists
-[2026-01-23 22:59:19.920] [upf_app] [error] Failed command: tc class add dev ens20 parent 1:1 classid 1:4b htb rate 1kbit ceil 208000kbit
-[2026-01-23 22:59:19.920] [upf_app] [info] Create QoS Flow Class 1:38 for PDU Session Parent 1:1
-RTNETLINK answers: File exists
-[2026-01-23 22:59:19.922] [upf_app] [error] Failed command: tc class add dev ens20 parent 1:1 classid 1:26 htb rate 1kbit ceil 1000000kbit
-[2026-01-23 22:59:19.922] [upf_app] [info] Create QoS Flow Class 1:75 for PDU Session Parent 1:1
-RTNETLINK answers: File exists
-[2026-01-23 22:59:19.924] [upf_app] [error] Failed command: tc class add dev ens20 parent 1:1 classid 1:4b htb rate 1kbit ceil 208000kbit
-[2026-01-23 22:59:19.928] [upf_app] [info] Attach Section tc_redirect to udp interface
+[2026-09-20 10:08:22.881] [upf_app] [error]   └─ ✗ Failed to create QoS flow class for QER 1
+[2026-09-20 10:08:22.885] [upf_app] [info] Attach Section tc_redirect to udp interface
 libbpf: Kernel error message: Exclusivity flag on, cannot modify
-[2026-01-23 22:59:19.928] [upf_app] [info] Success: TC-BPF hook tc_redirect_traffic already exists for interface ens22 (Ignore: libbpf: Kernel error message))
-[2026-01-23 22:59:19.928] [upf_app] [info] BPF program tc_redirect_traffic successfully attached to ens22 interface
-[2026-01-23 22:59:19.929] [upf_app] [info] SEID 0x1: Modifying 8 PDRs (Uplink: 4, Downlink: 4) in precedence order
-[2026-01-23 22:59:19.932] [upf_app] [info] SEID 0x1: Updated 8 PDRs in BPF map in precedence order
-[2026-01-23 22:59:19.932] [upf_app] [info]   >> Writing to BPF m_session_pdrs map with key SEID=1 (0x1)
+[2026-09-20 10:08:22.885] [upf_app] [info] Success: [QERTCProgram] TC-BPF hook tc_redirect_traffic already exists for interface ens22 (Ignore: libbpf: Kernel error message))
+[2026-09-20 10:08:22.885] [upf_app] [info] [QERTCProgram] TC-BPF 'tc_redirect_traffic' attached to ens22 (ingress, ifindex=6)
+[2026-09-20 10:08:22.885] [upf_app] [warning] 
+[2026-09-20 10:08:22.885] [upf_app] [warning]   ┌───────────────────────────────────────────────────┐
+[2026-09-20 10:08:22.885] [upf_app] [warning]   │  QoS ENFORCEMENT SETUP - COMPLETED WITH WARNINGS  │
+[2026-09-20 10:08:22.885] [upf_app] [warning]   │      Session 0x1: 0 QoS Flow(s) configured        │
+[2026-09-20 10:08:22.885] [upf_app] [warning]   │   Some TC operations failed (see warnings above)  │
+[2026-09-20 10:08:22.885] [upf_app] [warning]   └───────────────────────────────────────────────────┘
+[2026-09-20 10:08:22.885] [upf_app] [info] 
+[2026-09-20 10:08:22.885] [upf_app] [info] [QERTCProgram] BPF program torn down successfully
+[2026-09-20 10:08:22.887] [upf_app] [info] [eBPF] Modify Pipeline - Pipeline modified for session 0x1 with 2 PDRs (1 uplink TEIDs, 1 downlink TEIDs)
+[2026-09-20 10:08:22.887] [upf_app] [info] [N4] Session Modification: seid 0x1
+[2026-09-20 10:08:22.887] [upf_app] [info]   └─ Updated: 1 PDR, 1 FAR, 0 QER, 0 URR, 0 BAR, 0 MAR
+[2026-09-20 10:08:22.887] [upf_app] [info] [eBPF] Modify Pipeline - Updating pipeline for session 0x1
+[2026-09-20 10:08:22.887] [upf_app] [info] 
+[2026-09-20 10:08:22.887] [upf_app] [info]   ┌───────────────────────────────────────────────────┐
+[2026-09-20 10:08:22.887] [upf_app] [info]   │            QoS ENFORCEMENT SETUP                  │
+[2026-09-20 10:08:22.887] [upf_app] [info]   │       Session: 0x1, Interface: ens20              │
+[2026-09-20 10:08:22.887] [upf_app] [info]   └───────────────────────────────────────────────────┘
+[2026-09-20 10:08:22.887] [upf_app] [info]   ┌─ N6 Interface (Non-GTP): ens22
+[2026-09-20 10:08:22.887] [upf_app] [info]   └─ N3 Interface (GTP):     ens20
+[2026-09-20 10:08:22.892] [upf_app] [info]   ┌─ Creating PDU Session Class 1:1
+[2026-09-20 10:08:22.892] [upf_app] [info]   │  • Session Rate: 4,294,966,296 kbps
+RTNETLINK answers: File exists
+[2026-09-20 10:08:22.894] [upf_app] [error]   └─ ✗ Failed to create PDU session class 1:1
+[2026-09-20 10:08:22.894] [upf_app] [warning] QoS Flow missing GBR: set it to 0.8 x MBR
+[2026-09-20 10:08:22.894] [upf_app] [info]   ┌─ Createing QoS Flow Class 1:38 for PDU Session Parent 1:1
+[2026-09-20 10:08:22.894] [upf_app] [info]   │  • QoS Flow Rate (GBR): 800,000 kbps
+[2026-09-20 10:08:22.894] [upf_app] [info]   │  • QoS Flow Ceil (MBR): 1,000,000 kbps
+RTNETLINK answers: File exists
+[2026-09-20 10:08:22.896] [upf_app] [error]   └─ ✗ Failed to create QoS flow class for QER 1
+[2026-09-20 10:08:22.899] [upf_app] [info] Attach Section tc_redirect to udp interface
+libbpf: Kernel error message: Exclusivity flag on, cannot modify
+[2026-09-20 10:08:22.899] [upf_app] [info] Success: [QERTCProgram] TC-BPF hook tc_redirect_traffic already exists for interface ens22 (Ignore: libbpf: Kernel error message))
+[2026-09-20 10:08:22.899] [upf_app] [info] [QERTCProgram] TC-BPF 'tc_redirect_traffic' attached to ens22 (ingress, ifindex=6)
+[2026-09-20 10:08:22.899] [upf_app] [warning] 
+[2026-09-20 10:08:22.900] [upf_app] [warning]   ┌───────────────────────────────────────────────────┐
+[2026-09-20 10:08:22.900] [upf_app] [warning]   │  QoS ENFORCEMENT SETUP - COMPLETED WITH WARNINGS  │
+[2026-09-20 10:08:22.900] [upf_app] [warning]   │      Session 0x1: 0 QoS Flow(s) configured        │
+[2026-09-20 10:08:22.900] [upf_app] [warning]   │   Some TC operations failed (see warnings above)  │
+[2026-09-20 10:08:22.900] [upf_app] [warning]   └───────────────────────────────────────────────────┘
+[2026-09-20 10:08:22.900] [upf_app] [info] 
+[2026-09-20 10:08:22.900] [upf_app] [info] [QERTCProgram] BPF program torn down successfully
+[2026-09-20 10:08:22.901] [upf_app] [info] [eBPF] Modify Pipeline - Pipeline modified for session 0x1 with 2 PDRs (1 uplink TEIDs, 1 downlink TEIDs)
+[2026-09-20 10:08:22.901] [upf_app] [info] [N4] Update Session: seid 0x1 - eBPF data-path pipeline updated successfully
+[2026-09-20 10:08:22.901] [upf_app] [info] [N4] Session Modification: seid 0x1 - Completed successfully [Status: Session updated]
 ```
 Looking at the console log of the `nr-ue` command, UE has been assigned the IP address `10.60.0.1` from free5GC 5GC.
 ```
-[2026-01-23 22:59:19.547] [app] [info] Connection setup for PDU session[1] is successful, TUN interface[uesimtun0, 10.60.0.1] is up.
+[2026-09-20 10:08:22.894] [app] [info] Connection setup for PDU session[1] is successful, TUN interface[uesimtun0, 10.60.0.1] is up.
 ```
 Just in case, make sure it matches the IP address of the UE's TUNnel interface.
 ```
 # ip addr show
 ...
-10: uesimtun0: <POINTOPOINT,PROMISC,NOTRAILERS,UP,LOWER_UP> mtu 1400 qdisc fq_codel state UNKNOWN group default qlen 500
+6: uesimtun0: <POINTOPOINT,PROMISC,NOTRAILERS,UP,LOWER_UP> mtu 1400 qdisc fq_codel state UNKNOWN group default qlen 500
     link/none 
     inet 10.60.0.1/24 scope global uesimtun0
        valid_lft forever preferred_lft forever
-    inet6 fe80::d8cf:595b:412:c627/64 scope link stable-privacy 
+    inet6 fe80::3019:47c:940a:5485/64 scope link stable-privacy 
        valid_lft forever preferred_lft forever
 ...
 ```
@@ -974,22 +920,22 @@ Run `tcpdump` on VM-DN and check that the packet goes through N6 (ens20).
 - `ping google.com` on VM3 (UE)
 ```
 # ping google.com -I uesimtun0 -n
-PING google.com (142.250.194.110) from 10.60.0.1 uesimtun0: 56(84) bytes of data.
-64 bytes from 142.250.194.110: icmp_seq=1 ttl=111 time=21.5 ms
-64 bytes from 142.250.194.110: icmp_seq=2 ttl=111 time=17.4 ms
-64 bytes from 142.250.194.110: icmp_seq=3 ttl=111 time=18.4 ms
+PING google.com (142.250.21.138) from 10.60.0.1 uesimtun0: 56(84) bytes of data.
+64 bytes from 142.250.21.138: icmp_seq=1 ttl=106 time=18.8 ms
+64 bytes from 142.250.21.138: icmp_seq=2 ttl=106 time=18.7 ms
+64 bytes from 142.250.21.138: icmp_seq=3 ttl=106 time=18.6 ms
 ```
 - Run `tcpdump` on VM-DN
 ```
 # tcpdump -i ens20 -n
 tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
 listening on ens20, link-type EN10MB (Ethernet), snapshot length 262144 bytes
-23:04:27.560122 IP 10.60.0.1 > 142.250.194.110: ICMP echo request, id 1692, seq 1, length 64
-23:04:27.580556 IP 142.250.194.110 > 10.60.0.1: ICMP echo reply, id 1692, seq 1, length 64
-23:04:28.561677 IP 10.60.0.1 > 142.250.194.110: ICMP echo request, id 1692, seq 2, length 64
-23:04:28.578113 IP 142.250.194.110 > 10.60.0.1: ICMP echo reply, id 1692, seq 2, length 64
-23:04:29.563165 IP 10.60.0.1 > 142.250.194.110: ICMP echo request, id 1692, seq 3, length 64
-23:04:29.580654 IP 142.250.194.110 > 10.60.0.1: ICMP echo reply, id 1692, seq 3, length 64
+10:14:18.225996 IP 10.60.0.1 > 142.250.21.138: ICMP echo request, id 1312, seq 1, length 64
+10:14:18.243776 IP 142.250.21.138 > 10.60.0.1: ICMP echo reply, id 1312, seq 1, length 64
+10:14:19.227985 IP 10.60.0.1 > 142.250.21.138: ICMP echo request, id 1312, seq 2, length 64
+10:14:19.245579 IP 142.250.21.138 > 10.60.0.1: ICMP echo reply, id 1312, seq 2, length 64
+10:14:20.229652 IP 10.60.0.1 > 142.250.21.138: ICMP echo request, id 1312, seq 3, length 64
+10:14:20.247330 IP 142.250.21.138 > 10.60.0.1: ICMP echo reply, id 1312, seq 3, length 64
 ```
 You could specify the IP address assigned to the TUNnel interface to run almost any applications (iperf3 etc.) as in the following example using `nr-binder` tool.
 
@@ -1005,16 +951,16 @@ The document has moved
 ```
 - Run `tcpdump` on VM-DN
 ```
-23:05:10.236201 IP 10.60.0.1.41313 > 142.250.194.110.80: Flags [S], seq 3515789743, win 65280, options [mss 1360,sackOK,TS val 2215986113 ecr 0,nop,wscale 7], length 0
-23:05:10.251554 IP 142.250.194.110.80 > 10.60.0.1.41313: Flags [S.], seq 2925662671, ack 3515789744, win 65535, options [mss 1412,sackOK,TS val 248693945 ecr 2215986113,nop,wscale 8], length 0
-23:05:10.252484 IP 10.60.0.1.41313 > 142.250.194.110.80: Flags [.], ack 1, win 510, options [nop,nop,TS val 2215986129 ecr 248693945], length 0
-23:05:10.252485 IP 10.60.0.1.41313 > 142.250.194.110.80: Flags [P.], seq 1:74, ack 1, win 510, options [nop,nop,TS val 2215986129 ecr 248693945], length 73: HTTP: GET / HTTP/1.1
-23:05:10.268581 IP 142.250.194.110.80 > 10.60.0.1.41313: Flags [.], ack 74, win 1050, options [nop,nop,TS val 248693962 ecr 2215986129], length 0
-23:05:10.417479 IP 142.250.194.110.80 > 10.60.0.1.41313: Flags [P.], seq 1:774, ack 74, win 1050, options [nop,nop,TS val 248694111 ecr 2215986129], length 773: HTTP: HTTP/1.1 301 Moved Permanently
-23:05:10.418389 IP 10.60.0.1.41313 > 142.250.194.110.80: Flags [.], ack 774, win 504, options [nop,nop,TS val 2215986295 ecr 248694111], length 0
-23:05:10.419292 IP 10.60.0.1.41313 > 142.250.194.110.80: Flags [F.], seq 74, ack 774, win 504, options [nop,nop,TS val 2215986295 ecr 248694111], length 0
-23:05:10.434578 IP 142.250.194.110.80 > 10.60.0.1.41313: Flags [F.], seq 774, ack 75, win 1050, options [nop,nop,TS val 248694128 ecr 2215986295], length 0
-23:05:10.435424 IP 10.60.0.1.41313 > 142.250.194.110.80: Flags [.], ack 775, win 504, options [nop,nop,TS val 2215986312 ecr 248694128], length 0
+10:15:31.629392 IP 10.60.0.1.48709 > 142.250.21.139.80: Flags [S], seq 3418321718, win 65280, options [mss 1360,sackOK,TS val 13621707 ecr 0,nop,wscale 7], length 0
+10:15:31.644979 IP 142.250.21.139.80 > 10.60.0.1.48709: Flags [S.], seq 2293845036, ack 3418321719, win 65535, options [mss 1412,sackOK,TS val 2601802269 ecr 13621707,nop,wscale 8], length 0
+10:15:31.646073 IP 10.60.0.1.48709 > 142.250.21.139.80: Flags [.], ack 1, win 510, options [nop,nop,TS val 13621724 ecr 2601802269], length 0
+10:15:31.646073 IP 10.60.0.1.48709 > 142.250.21.139.80: Flags [P.], seq 1:74, ack 1, win 510, options [nop,nop,TS val 13621724 ecr 2601802269], length 73: HTTP: GET / HTTP/1.1
+10:15:31.662360 IP 142.250.21.139.80 > 10.60.0.1.48709: Flags [.], ack 74, win 1050, options [nop,nop,TS val 2601802286 ecr 13621724], length 0
+10:15:31.704810 IP 142.250.21.139.80 > 10.60.0.1.48709: Flags [P.], seq 1:774, ack 74, win 1050, options [nop,nop,TS val 2601802329 ecr 13621724], length 773: HTTP: HTTP/1.1 301 Moved Permanently
+10:15:31.706546 IP 10.60.0.1.48709 > 142.250.21.139.80: Flags [.], ack 774, win 504, options [nop,nop,TS val 13621784 ecr 2601802329], length 0
+10:15:31.706546 IP 10.60.0.1.48709 > 142.250.21.139.80: Flags [F.], seq 74, ack 774, win 504, options [nop,nop,TS val 13621784 ecr 2601802329], length 0
+10:15:31.722876 IP 142.250.21.139.80 > 10.60.0.1.48709: Flags [F.], seq 774, ack 75, win 1050, options [nop,nop,TS val 2601802347 ecr 13621784], length 0
+10:15:31.723671 IP 10.60.0.1.48709 > 142.250.21.139.80: Flags [.], ack 775, win 504, options [nop,nop,TS val 13621802 ecr 2601802347], length 0
 ```
 Please note that the `ping` tool does not work with `nr-binder`. Please refer to [here](https://github.com/aligungr/UERANSIM/issues/186#issuecomment-729534464) for the reason.
 You could now connect to the DN and send any packets on the network using OAI-CN5G-UPF.
@@ -1028,5 +974,6 @@ I would like to thank the excellent developers and all the contributors of free5
 
 ## Changelog (summary)
 
+- [2026.09.20] Updated to free5GC v4.2.3 (2026.09.16) and OAI-CN5G-UPF v2.2.1 (2026.09.09).
 - [2026.01.23] Rewrote this using OAI-CN5G-UPF built on Ubuntu 24.04.
 - [2026.01.18] Initial release.
